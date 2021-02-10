@@ -25,7 +25,7 @@ class _TreeViewState extends State<TreeView> {
         ).topRight(),
         NodeView(node: buildNode(widget.box))
       ],
-    ).expand();
+    );
   }
 }
 

@@ -10,7 +10,7 @@ class LambdaExecutor {
 
   Future execute(Lambda lambda) async {
     if (lambda.type == CONST) {
-      vein.run(ConstHandler()..params = lambda.params);
+      vein?.run(ConstHandler()..params = lambda.params);
     } else if (lambda.type == NULL) {
       vein.run(NullHandler()..params = lambda.params);
     } else {
@@ -31,7 +31,7 @@ class LambdaExecutor {
 
   void reset() {
     paramsSprinkle?.cancel();
-    vein.reset();
+    vein?.reset();
   }
 }
 

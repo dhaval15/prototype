@@ -21,3 +21,7 @@ Prototyping Software for flutter developed in flutter
 - [ ] Lambda Integration
 - [ ] Keyboard Only Mode
 - [ ] Drag and Drop Support
+
+### Screenshots
+
+![Live Preview](screenshots/screenshot1.png)

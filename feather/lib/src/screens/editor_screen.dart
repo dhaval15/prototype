@@ -19,18 +19,6 @@ class EditorScreen extends StatelessWidget {
         builder: (context, viewStream, editorStream) => PrototypeScaffold(
           backgroundColor: backgroundColor,
           title: 'Feather',
-          actions: [
-            ActionWidget(
-              icon: Icons.account_circle,
-            ),
-            ActionWidget(icon: Icons.save),
-          ],
-          leading: InkWell(
-            onTap: () {
-              EditContext.of(context).back();
-            },
-            child: Icon(Icons.arrow_back),
-          ),
           tree: SizedBox(
             width: 240,
             height: context.height,
@@ -78,6 +66,12 @@ class EditorScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.max,
                     children: [
+                      InkWell(
+                        onTap: () {
+                          EditContext.of(context).back();
+                        },
+                        child: Icon(Icons.arrow_back),
+                      ),
                       Text('Properties', style: context.subtitle1),
                       ActionWidget(
                         icon: Icons.add,

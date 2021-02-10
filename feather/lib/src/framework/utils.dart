@@ -6,14 +6,14 @@ Future _init() async {
   ScopeBox.generator = BoxRegistery.instance;
   // JsonEngine.registry = BoxRegistery.instance.any;
   BoxRegistery.instance.registerManyWidgets({
-    'Container': ([data = const {}]) => ContainerBox(data),
-    'Text': ([data = const {}]) => TextBox(data),
-    'Center': ([data = const {}]) => CenterBox(data),
-    'Card': ([data = const {}]) => CardBox(data),
-    'Padding': ([data = const {}]) => PaddingBox(data),
-    'Column': ([data = const {}]) => ColumnBox(data),
-    'Row': ([data = const {}]) => RowBox(data),
-    'Scope': ([data = const {}]) => ScopeBox(data),
+    'Container': ([Map<String, dynamic> data = const {}]) => ContainerBox(data),
+    'Text': ([Map<String, dynamic> data = const {}]) => TextBox(data),
+    'Center': ([Map<String, dynamic> data = const {}]) => CenterBox(data),
+    'Card': ([Map<String, dynamic> data = const {}]) => CardBox(data),
+    'Padding': ([Map<String, dynamic> data = const {}]) => PaddingBox(data),
+    'Column': ([Map<String, dynamic> data = const {}]) => ColumnBox(data),
+    'Row': ([Map<String, dynamic> data = const {}]) => RowBox(data),
+    'Scope': ([Map<String, dynamic> data = const {}]) => ScopeBox(data),
     // 'Scope': ([Map<String, dynamic> data = const {}]) => ScopeBox(data),
   });
   BoxRegistery.instance.registerManyBoxes({

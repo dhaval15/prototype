@@ -1,7 +1,7 @@
 import 'dart:collection';
 import 'framework.dart';
 
-typedef WidgetBoxCreator = WidgetBox Function([dynamic data]);
+typedef WidgetBoxCreator = WidgetBox Function([Map<String, dynamic> data]);
 typedef BoxCreator = BoxMixin Function([Map<String, dynamic> data]);
 
 class BoxRegistery with ChildGenerator, BoxGeneratorMixin {

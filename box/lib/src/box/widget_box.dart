@@ -50,8 +50,8 @@ class Guideline extends StatefulWidget {
     return _guideState;
   }
 
-  @override
-  Type get runtimeType => child?.runtimeType;
+  // @override
+  // Type get runtimeType => child?.runtimeType;
 }
 
 class _GuidelineState extends State<Guideline> {

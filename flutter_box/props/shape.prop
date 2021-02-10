@@ -1,0 +1,7 @@
+BeveledRectangleBorder BeveledRectangleBorder Complex
+BorderRadius 	borderRadius	BorderRadius$onlyBox		BorderRadius.zero	present
+Side		side		BorderSideBox			BorderSide.none		present
+
+RoundedRectangleBorder RoundedRectangleBorder Complex
+BorderRadius 	borderRadius	BorderRadius$onlyBox		BorderRadius.zero	present
+Side		side		BorderSideBox			BorderSide.none		present

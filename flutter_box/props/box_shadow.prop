@@ -1,0 +1,5 @@
+BoxShadow  BoxShadow Complex
+BlurRadius         blurRadius          DoubleBox.dynamic    4    	           permanant
+Color              color               ColorBox.dynamic     Colors.black           permanant
+SpreadRadius       spreadRadius        DoubleBox.dynamic    4		           permanant 
+Offset             offset              OffsetBox            {}                     permanant

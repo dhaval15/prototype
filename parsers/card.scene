@@ -1,0 +1,21 @@
+Card(
+  radius: 200,
+  child: Container(
+    color: #000000CC,
+    width: 200,
+    height: 200,
+    radius: 200,
+    child: Center(
+      child: Text(
+        Lambda("cc","FROST",Lambda("tm",2)),
+        style: TextStyle(
+          fontStyle: FontStyle.normal,
+          color: #FFFFFFFF,
+	  letterSpacing: 8,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    ),
+  ),
+)
+

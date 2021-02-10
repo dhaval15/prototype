@@ -1,0 +1,6 @@
+Container Container ListView
+Width     	width         	DoubleBox.dynamic       null           	present
+Height    	height        	DoubleBox.dynamic       null           	present
+Child     	child         	ChildBox.dynamic        null            permanant
+Color     	color         	ColorBox.dynamic        null            absent
+Decoration	decoration	BoxDecorationBox	{}		absent

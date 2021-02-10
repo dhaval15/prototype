@@ -1,0 +1,6 @@
+BoxShadow  BoxShadow Column
+BlurRadius         blurRadius          DoubleSelectBox.dynamic    4    	           permanant
+Color              color               ColorSelectBox.dynamic     Colors.black     permanant
+SpreadRadius       spreadRadius        DoubleSelectBox.dynamic    4		   permanant 
+OffsetX            offsetX             DoubleSelectBox.dynamic    4                permanant
+OffsetY            offsetY             DoubleSelectBox.dynamic    4                permanant

@@ -1,0 +1,5 @@
+Card Card ListView
+Child     	child         	ChildBox.dynamic             	null            permanant
+Color     	color         	ColorBox.dynamic             	null            permanant
+Elevation 	elevation	DoubleBox.dynamic	     	4		present
+Shape		shape		BeveledRectangleBorderBox	{}		present

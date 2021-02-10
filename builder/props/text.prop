@@ -1,0 +1,4 @@
+Text Text ListView
+Text          #0         StringBox.dynamic            'Hello'         permanant
+Style         style      TextStyleBox                 {}              present
+TextAlign     textAlign  TextAlignBox.dynamic         TextAlign.start absent

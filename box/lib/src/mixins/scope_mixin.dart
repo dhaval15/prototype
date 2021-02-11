@@ -14,6 +14,8 @@ mixin ScopeMixin {
   }
 
   bool verify(String name, BoxMixin box) {
+    print(
+        "Scope Variable Check : ${box.runtimeType} ${variables[name].runtimeType}");
     return box.runtimeType == variables[name].runtimeType;
   }
 

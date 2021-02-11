@@ -23,7 +23,10 @@ class _TreeViewState extends State<TreeView> {
           },
           icon: Icon(Icons.refresh),
         ).topRight(),
-        NodeView(node: buildNode(widget.box))
+        Padding(
+          padding: EdgeInsets.all(4),
+          child: NodeView(node: buildNode(widget.box)),
+        )
       ],
     );
   }
@@ -36,15 +39,26 @@ class Node {
   Node(this.value, this.nodes);
 }
 
-Node buildNode(CompositeBox<Widget> box) {
+Node buildNode(WidgetBox box) {
   final value = box.boxType;
-  final childrenNodes = box.props
-      .where((prop) => prop.box is ChildBox)
-      .map((prop) => (prop.box as ChildBox).box)
-      .where((box) => box != null)
-      .map((box) => buildNode(box))
-      .toList();
-  return Node(value, childrenNodes);
+  if (box is MultiWidgetBox) {
+    final childrenNodes = (box.children.box as MultiBox)
+        .boxes
+        .map((box) => box as ChildBox)
+        .map((box) => box.box)
+        .where((box) => box != null)
+        .map((box) => buildNode(box))
+        .toList();
+    return Node(value, childrenNodes);
+  } else {
+    final childrenNodes = box.props
+        .where((prop) => prop.box is ChildBox)
+        .map((prop) => (prop.box as ChildBox).box)
+        .where((box) => box != null)
+        .map((box) => buildNode(box))
+        .toList();
+    return Node(value, childrenNodes);
+  }
 }
 
 class NodeView extends StatelessWidget {
@@ -58,7 +72,7 @@ class NodeView extends StatelessWidget {
       children: [
         Text(
           node.value,
-          style: context.headline6,
+          style: TextStyle(fontSize: 18),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

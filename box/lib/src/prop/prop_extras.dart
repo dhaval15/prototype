@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:lambda/lambda.dart';
 import 'package:select/select.dart';
 
+const _SCOPE_CHECK = false;
+
 enum ActionEntry { Delete, Lambda, Scoped, Copy, Paste }
 
 mixin FieldExposerMixin<T> on PropMixin<T> {
@@ -103,7 +105,7 @@ mixin ValueExposerMixin<T> on PropMixin<T> {
     if (name != null) {
       ScopeBox scope =
           EditContextProvider.of(context).findAncestorBoxOfType<ScopeBox>();
-      if (scope.verify(variableName, box)) {
+      if (!_SCOPE_CHECK || scope.verify(variableName, box)) {
         final sprinkle = scope.watch(variableName);
         type = PropType.scoped(variableName);
         key.currentState.hibernate();

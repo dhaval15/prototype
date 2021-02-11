@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'box.dart';
 import 'boxes.dart';
+import '../prop/prop.dart';
 import '../widgets/widgets.dart';
 
 abstract class WidgetBox<T extends Widget> = CompositeBox<Widget>
     with WidgetProvider<T>;
+
+abstract class MultiWidgetBox<T extends Widget> = WidgetBox<T>
+    with MultiWidgetBoxProvider;
+
+mixin MultiWidgetBoxProvider {
+  Prop get children;
+}
 
 mixin WidgetProvider<T extends Widget> on CompositeBox<Widget> {
   T get widget;

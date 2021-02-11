@@ -90,3 +90,13 @@ class EditContext {
     _editorController.close();
   }
 }
+
+class Node {
+  final String name;
+  final int index;
+
+  Node({
+    this.name,
+    this.index,
+  });
+}

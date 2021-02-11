@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:box/box.dart';
 
-class ColumnBox extends WidgetBox<Column> with ListViewLayoutProvider {
+class ColumnBox extends MultiWidgetBox<Column> with ListViewLayoutProvider {
   ColumnBox([data = const {}])
       : children = Prop(
-          box: MultiBox<Widget>(data['children'] ?? [],
-              onAdd: () => ChildBox.value(null)),
+          box: ChildrenBox(data['children'] ?? []),
           name: 'Children',
           defaultValue: [],
           type: PropType.value,
@@ -34,7 +33,7 @@ class ColumnBox extends WidgetBox<Column> with ListViewLayoutProvider {
 
   @override
   List<Prop> get props =>
-      [children, mainAxisSize, mainAxisAlignment, crossAxisAlignment];
+      [mainAxisSize, mainAxisAlignment, crossAxisAlignment, children];
 
   @override
   Column get widget => Column(

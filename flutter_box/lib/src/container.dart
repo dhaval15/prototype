@@ -44,4 +44,7 @@ class ContainerBox extends WidgetBox<Container> with ListViewLayoutProvider {
         color: color.value,
         decoration: decoration.value,
       );
+
+  @override
+  String get boxType => 'Container';
 }

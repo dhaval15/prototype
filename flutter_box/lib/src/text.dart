@@ -35,4 +35,6 @@ class TextBox extends WidgetBox<Widget> with ListViewLayoutProvider {
         style: style.value,
         textAlign: textAlign.value,
       );
+  @override
+  String get boxType => 'Text';
 }

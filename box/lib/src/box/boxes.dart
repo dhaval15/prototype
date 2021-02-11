@@ -1,3 +1,4 @@
+import 'package:box/box.dart';
 import 'package:box/src/providers/providers.dart';
 
 import 'core_box.dart';
@@ -15,4 +16,9 @@ class ChildBox = BaseChildBox with ChildFieldProvider, ChildCodeProvider;
 abstract class CompositeBox<T> = BaseCompositeBox<T>
     with CompositeFieldProvider, CompositeCodeProvider;
 class MultiBox<T> = BaseMultiBox<T>
-    with MultiFieldProvider<T>, MultiCodeProvider;
+    with MultiFieldProvider<T>, MultiCodeProvider, MultiBoxTypeMixin;
+
+mixin MultiBoxTypeMixin implements BoxTypeMixin {
+  @override
+  String get boxType => 'MultiBox';
+}

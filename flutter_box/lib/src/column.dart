@@ -42,4 +42,6 @@ class ColumnBox extends MultiWidgetBox<Column> with ListViewLayoutProvider {
         mainAxisAlignment: mainAxisAlignment.value,
         crossAxisAlignment: crossAxisAlignment.value,
       );
+  @override
+  String get boxType => 'Column';
 }

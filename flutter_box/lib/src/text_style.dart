@@ -50,4 +50,6 @@ class TextStyleBox extends CompositeBox<TextStyle> with ComplexLayoutProvider {
         letterSpacing: letterSpacing.value,
         wordSpacing: wordSpacing.value,
       );
+  @override
+  String get boxType => 'TextStyle';
 }

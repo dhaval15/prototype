@@ -26,4 +26,6 @@ class PaddingBox extends WidgetBox<Padding> with ListViewLayoutProvider {
         child: child.value,
         padding: padding.value,
       );
+  @override
+  String get boxType => 'Padding';
 }

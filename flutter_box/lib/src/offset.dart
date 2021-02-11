@@ -30,4 +30,6 @@ class OffsetBox extends CompositeBox<Offset> with RowLayoutProvider {
         x.value,
         y.value,
       );
+  @override
+  String get boxType => 'Offset';
 }

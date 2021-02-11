@@ -41,4 +41,6 @@ class BoxShadowBox extends CompositeBox<BoxShadow> with ComplexLayoutProvider {
         spreadRadius: spreadRadius.value,
         offset: offset.value,
       );
+  @override
+  String get boxType => 'BoxShadow';
 }

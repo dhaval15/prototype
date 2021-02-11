@@ -29,4 +29,6 @@ class BorderSideBox extends CompositeBox<BorderSide>
         width: width.value,
         color: color.value,
       );
+  @override
+  String get boxType => 'BorderSide';
 }

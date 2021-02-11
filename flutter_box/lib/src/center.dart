@@ -19,4 +19,6 @@ class CenterBox extends WidgetBox<Center> with ListViewLayoutProvider {
   Center get widget => Center(
         child: child.value,
       );
+  @override
+  String get boxType => 'Center';
 }

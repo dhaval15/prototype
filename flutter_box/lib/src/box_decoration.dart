@@ -28,7 +28,7 @@ class BoxDecorationBox extends CompositeBox<BoxDecoration>
         gradient = Prop(
           box: LinearGradientBox(),
           name: 'Gradient',
-          type: PropType.value,
+          type: PropType.fromData(data['gradient']),
         ),
         super();
 
@@ -45,4 +45,6 @@ class BoxDecorationBox extends CompositeBox<BoxDecoration>
         gradient: gradient.value,
         boxShadow: boxShadow.value?.cast<BoxShadow>(),
       );
+  @override
+  String get boxType => 'BoxDecoration';
 }

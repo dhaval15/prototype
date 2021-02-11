@@ -43,6 +43,8 @@ class EdgeInsets$onlyBox extends CompositeBox<EdgeInsets>
         right: right.value,
         bottom: bottom.value,
       );
+  @override
+  String get boxType => 'EdgeInsets';
 }
 
 class EdgeInsets$symmetricBox extends CompositeBox<EdgeInsets>
@@ -72,6 +74,8 @@ class EdgeInsets$symmetricBox extends CompositeBox<EdgeInsets>
         vertical: vertical.value,
         horizontal: horizontal.value,
       );
+  @override
+  String get boxType => 'EdgeInsets';
 }
 
 class EdgeInsets$allBox extends CompositeBox<EdgeInsets>
@@ -95,4 +99,6 @@ class EdgeInsets$allBox extends CompositeBox<EdgeInsets>
   EdgeInsets get value => EdgeInsets.all(
         all.value,
       );
+  @override
+  String get boxType => 'EdgeInsets';
 }

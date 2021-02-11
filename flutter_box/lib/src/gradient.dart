@@ -35,4 +35,6 @@ class LinearGradientBox extends CompositeBox<LinearGradient>
         begin: begin.value,
         end: end.value,
       );
+  @override
+  String get boxType => 'LinearGradient';
 }

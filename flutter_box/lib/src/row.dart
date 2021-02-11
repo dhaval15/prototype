@@ -42,4 +42,6 @@ class RowBox extends MultiWidgetBox<Row> with ListViewLayoutProvider {
         mainAxisAlignment: mainAxisAlignment.value,
         crossAxisAlignment: crossAxisAlignment.value,
       );
+  @override
+  String get boxType => 'Radius';
 }

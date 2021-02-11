@@ -27,4 +27,6 @@ class Border$allBox extends CompositeBox<Border> with ComplexLayoutProvider {
         width: width.value,
         color: color.value,
       );
+  @override
+  String get boxType => 'Border';
 }

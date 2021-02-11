@@ -21,7 +21,7 @@ class CardBox extends WidgetBox<Card> with ListViewLayoutProvider {
           type: PropType.value,
         ),
         shape = Prop(
-          box: BeveledRectangleBorderBox(data['shape'] ?? {}),
+          box: RoundedRectangleBorderBox(data['shape'] ?? {}),
           name: 'Shape',
           type: PropType.value,
         ),
@@ -39,4 +39,6 @@ class CardBox extends WidgetBox<Card> with ListViewLayoutProvider {
         elevation: elevation.value,
         shape: shape.value,
       );
+  @override
+  String get boxType => 'Card';
 }

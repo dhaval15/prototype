@@ -43,4 +43,6 @@ class BorderRadius$onlyBox extends CompositeBox<BorderRadius>
         bottomRight: bottomRight.value,
         bottomLeft: bottomLeft.value,
       );
+  @override
+  String get boxType => 'BorderRadius';
 }

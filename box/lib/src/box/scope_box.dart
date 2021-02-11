@@ -47,4 +47,7 @@ class ScopeBox extends WidgetBox<Scope> with ScopeMixin, ColumnLayoutProvider {
           ],
         ),
       );
+
+  @override
+  String get boxType => 'Scope';
 }

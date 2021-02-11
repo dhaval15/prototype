@@ -6,4 +6,7 @@ import 'boxes.dart';
 class ChildrenBox extends MultiBox<Widget> {
   ChildrenBox(List<ChildBox> boxes)
       : super(boxes, onAdd: () => ChildBox.value(null));
+
+  @override
+  String get boxType => 'Children';
 }

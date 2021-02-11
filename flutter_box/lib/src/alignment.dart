@@ -29,4 +29,6 @@ class AlignmentBox extends CompositeBox<Alignment> with RowLayoutProvider {
         x.value,
         y.value,
       );
+  @override
+  String get boxType => 'Alignment';
 }

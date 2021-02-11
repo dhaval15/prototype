@@ -54,8 +54,9 @@ mixin CodeProvider {
   String buildCode(dynamic boxMixin) => throw 'Code Extension not implemented';
 }
 mixin BoxTypeMixin {
-  String get boxType {
-    final type = this.runtimeType.toString();
-    return type.substring(0, type.length - 3).replaceAll('\$', '.');
-  }
+  String get boxType;
+  //{
+  // final type = this.runtimeType.toString();
+  // return type.substring(0, type.length - 3).replaceAll('\$', '.');
+  // }
 }

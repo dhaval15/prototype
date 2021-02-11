@@ -34,8 +34,8 @@ mixin BoxMixin<T>
       library: 'Prototype Framework',
       exception: '${this.runtimeType} has no editor provided'));
 
-  String get boxType {
-    final type = this.runtimeType.toString();
-    return type.substring(0, type.length - 3).replaceAll('\$', '.');
-  }
+  // String get boxType {
+  //   final type = this.runtimeType.toString();
+  //   return type.substring(0, type.length - 3).replaceAll('\$', '.');
+  // }
 }

@@ -29,6 +29,8 @@ class BeveledRectangleBorderBox extends CompositeBox<BeveledRectangleBorder>
         borderRadius: borderRadius.value,
         side: side.value,
       );
+  @override
+  String get boxType => 'Container';
 }
 
 class RoundedRectangleBorderBox extends CompositeBox<RoundedRectangleBorder>
@@ -58,4 +60,6 @@ class RoundedRectangleBorderBox extends CompositeBox<RoundedRectangleBorder>
         borderRadius: borderRadius.value,
         side: side.value,
       );
+  @override
+  String get boxType => 'RoundedRectangleBorder';
 }

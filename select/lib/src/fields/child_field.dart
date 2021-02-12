@@ -1,6 +1,7 @@
 part of 'fields.dart';
 
 mixin ChildMixin {
+  get box;
   Widget get value;
   set value(value);
 }
@@ -28,7 +29,7 @@ class _ChildFieldState extends State<ChildField> {
   @override
   void initState() {
     super.initState();
-    type = widget.child.toType() ?? 'Select';
+    type = widget.child.box?.boxType ?? 'Select';
   }
 
   @override

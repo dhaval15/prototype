@@ -3,17 +3,24 @@ import 'package:feather/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:extras/extras.dart';
 
-class EditorScreen extends StatelessWidget {
+class EditorScreen extends StatefulWidget {
   final Color backgroundColor;
-  final ContainerBox box = ContainerBox();
 
   EditorScreen({Key key, this.backgroundColor}) : super(key: key);
 
   @override
+  _EditorScreenState createState() => _EditorScreenState();
+}
+
+class _EditorScreenState extends State<EditorScreen>
+    with AutomaticKeepAliveClientMixin {
+  final ContainerBox box = ContainerBox();
+
+  @override
   Widget build(BuildContext context) {
-    final backgroundColor = this.backgroundColor ?? context.canvas;
+    super.build(context);
+    final backgroundColor = this.widget.backgroundColor ?? context.canvas;
     return EditContextProvider(
-      key: key,
       child: BoxRenderView(
         box: box,
         builder: (context, viewStream, editorStream) => PrototypeScaffold(
@@ -90,4 +97,7 @@ class EditorScreen extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

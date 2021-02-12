@@ -1,6 +1,6 @@
-import 'package:feather/src/screens/screens.dart';
 import 'package:flutter/material.dart';
-import 'package:feather/src/framework/framework.dart';
+import 'src/framework/framework.dart';
+import 'src/workspace/workspace_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       debugShowMaterialGrid: false,
-      home: EditorScreen(),
+      home: WorkspaceView(),
     );
   }
 }

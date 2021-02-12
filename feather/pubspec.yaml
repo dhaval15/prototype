@@ -30,7 +30,7 @@ dependencies:
   flutter_box:
     path: ../flutter_box
   extras:
-    path: ../../Workspace/extras
+    path: ../extras
   flutter:
     sdk: flutter
 

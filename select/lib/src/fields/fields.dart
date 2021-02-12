@@ -10,6 +10,7 @@ part 'double_field.dart';
 part 'color_field.dart';
 part 'option_field.dart';
 part 'child_field.dart';
+part 'bool_field.dart';
 
 typedef ValueChangeListener<T> = void Function(T value);
 

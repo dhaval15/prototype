@@ -74,6 +74,19 @@ mixin IntFieldProvider on BoxMixin<int>
   }
 }
 
+mixin BoolFieldProvider on BoxMixin<bool>
+    implements FieldProvider<bool>, ValueUpdateMixin<bool> {
+  @override
+  Widget buildField(bool value) {
+    return BoolField(
+      value: value,
+      listener: (value) {
+        this.value = value is Map ? Lambda.fromJson(value) : value;
+      },
+    ).restrict(height: FIELD_HEIGHT);
+  }
+}
+
 mixin ColorFieldProvider on BoxMixin<Color>
     implements FieldProvider<Color>, ValueUpdateMixin<Color> {
   @override

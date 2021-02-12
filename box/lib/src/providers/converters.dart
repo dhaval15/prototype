@@ -27,6 +27,21 @@ mixin DoubleConverter implements ConverterMixin<double> {
   }
 }
 
+mixin BoolConverter implements ConverterMixin<bool> {
+  bool convert(value) => convertIt(value);
+  static bool convertIt(value) {
+    if (value == null) return null;
+    if (value is bool) return value;
+    if (value is String)
+      return value == 'true'
+          ? true
+          : value == 'false'
+              ? false
+              : null;
+    return null;
+  }
+}
+
 mixin RadiusConverter implements ConverterMixin<Radius> {
   Radius convert(value) {
     final doubleValue = DoubleConverter.convertIt(value);

@@ -11,6 +11,7 @@ class StringBox = CoreBox<String> with StringFieldProvider, StringCodeProvider;
 class DoubleBox = CoreBox<double> with DoubleFieldProvider, DoubleConverter;
 class RadiusBox = CoreBox<Radius> with RadiusFieldProvider, RadiusConverter;
 class IntBox = CoreBox<int> with IntFieldProvider, IntConverter;
+class BoolBox = CoreBox<bool> with BoolFieldProvider, BoolConverter;
 class ColorBox = CoreBox<Color> with ColorFieldProvider, ColorConverter;
 class ChildBox = BaseChildBox with ChildFieldProvider, ChildCodeProvider;
 abstract class CompositeBox<T> = BaseCompositeBox<T>

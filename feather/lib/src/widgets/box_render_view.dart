@@ -15,8 +15,6 @@ class BoxRenderView extends StatefulWidget {
 
 class _BoxRenderViewState extends State<BoxRenderView> {
   final _controller = StreamController<Widget>();
-  Widget child = CircularProgressIndicator();
-  Widget editor = SizedBox();
   @override
   void initState() {
     super.initState();

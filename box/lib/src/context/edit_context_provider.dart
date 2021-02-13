@@ -42,11 +42,17 @@ class EditContext {
 
   final List<Prop> _list = [];
   final _editorController = StreamController<Widget>();
+  final _treeController = StreamController<int>();
 
   Stream<Widget> get editorStream => _editorController.stream;
+  Stream<int> get treeStream => _treeController.stream;
 
   Prop get current => _list.last;
   CompositeBox<Widget> get currentBox => current.box;
+
+  void updateTree() {
+    _treeController.add(0);
+  }
 
   T findAncestorBoxOfType<T>() {
     int index = _list.length - 1;
@@ -88,6 +94,7 @@ class EditContext {
 
   void dispose() {
     _editorController.close();
+    _treeController.close();
   }
 }
 

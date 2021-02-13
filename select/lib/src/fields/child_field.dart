@@ -11,9 +11,29 @@ mixin ChildGenerator {
   widget(String type);
 }
 
+abstract class ChildEvent {}
+
+class ChildAddEvent extends ChildEvent {
+  final BuildContext context;
+
+  ChildAddEvent(this.context);
+}
+
+class ChildToEvent extends ChildEvent {
+  final BuildContext context;
+
+  ChildToEvent(this.context);
+}
+
+class ChildDeleteEvent extends ChildEvent {
+  final BuildContext context;
+
+  ChildDeleteEvent(this.context);
+}
+
 class ChildField extends StatefulWidget {
   static ChildGenerator generator;
-  final ValueChangeListener<BuildContext> listener;
+  final ValueChangeListener<ChildEvent> listener;
   final Widget value;
   final ChildMixin child;
 
@@ -42,7 +62,7 @@ class _ChildFieldState extends State<ChildField> {
               child: Text(type),
             ),
             onTap: () async {
-              if (widget.child.isEmpty()) {
+              if (widget.child.value == null) {
                 final type = await showDialog(
                   context: context,
                   builder: (context) => WidgetsDialog(),
@@ -53,10 +73,10 @@ class _ChildFieldState extends State<ChildField> {
                     this.type = type;
                   });
                   widget.child.value = box;
-                  widget.listener(context);
+                  widget.listener(ChildAddEvent(context));
                 }
               } else {
-                widget.listener(context);
+                widget.listener(ChildToEvent(context));
               }
             }).expand(),
         GestureDetector(
@@ -66,6 +86,7 @@ class _ChildFieldState extends State<ChildField> {
           ).padding(all: 6),
           onTap: () {
             widget.child.value = null;
+            widget.listener(ChildDeleteEvent(context));
             setState(() {
               type = 'Select';
             });
@@ -94,15 +115,5 @@ class WidgetsDialog extends StatelessWidget {
         },
       ),
     );
-  }
-}
-
-extension on ChildMixin {
-  bool isEmpty() {
-    return value == null;
-  }
-
-  String toType() {
-    return value?.runtimeType?.toString();
   }
 }

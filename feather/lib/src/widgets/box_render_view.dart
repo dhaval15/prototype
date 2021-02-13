@@ -5,8 +5,8 @@ import 'package:feather/src/framework/framework.dart';
 
 class BoxRenderView extends StatefulWidget {
   final CompositeBox<Widget> box;
-  final Widget Function(BuildContext context, Stream<Widget> viewController,
-      Stream<Widget> editorController) builder;
+  final Widget Function(BuildContext context, Stream<Widget> viewStream,
+      Stream<Widget> editorStream, Stream<int> treeStream) builder;
 
   const BoxRenderView({Key key, this.box, this.builder}) : super(key: key);
   @override
@@ -25,5 +25,8 @@ class _BoxRenderViewState extends State<BoxRenderView> {
 
   @override
   Widget build(BuildContext context) => widget.builder(
-      context, _controller.stream, EditContext.of(context).editorStream);
+      context,
+      _controller.stream,
+      EditContext.of(context).editorStream,
+      EditContext.of(context).treeStream);
 }

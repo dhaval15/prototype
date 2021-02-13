@@ -23,13 +23,17 @@ class _EditorScreenState extends State<EditorScreen>
     return EditContextProvider(
       child: BoxRenderView(
         box: box,
-        builder: (context, viewStream, editorStream) => PrototypeScaffold(
+        builder: (context, viewStream, editorStream, treeStream) =>
+            PrototypeScaffold(
           backgroundColor: backgroundColor,
           title: 'Feather',
           tree: SizedBox(
             width: 240,
             height: context.height,
-            child: TreeView(box: box),
+            child: StreamBuilder<int>(
+              builder: (context, snapshot) => TreeView(box: box),
+              stream: treeStream,
+            ),
           ),
           view: ViewContainer(
             actions: [

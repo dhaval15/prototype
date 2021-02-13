@@ -105,8 +105,13 @@ mixin ChildFieldProvider on BaseChildBox
         value: value,
         child: this,
         listener: (value) {
-          if (value is BuildContext) {
-            EditContextProvider.of(value).current = Prop.onlyBox(box);
+          if (value is ChildAddEvent) {
+            EditContextProvider.of(value.context).current = Prop.onlyBox(box);
+            EditContextProvider.of(value.context).updateTree();
+          } else if (value is ChildToEvent) {
+            EditContextProvider.of(value.context).current = Prop.onlyBox(box);
+          } else if (value is ChildDeleteEvent) {
+            EditContextProvider.of(value.context).updateTree();
           }
         },
       ).restrict(height: FIELD_HEIGHT);

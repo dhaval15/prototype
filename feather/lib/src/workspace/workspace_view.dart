@@ -48,7 +48,7 @@ class _WorkspaceViewState extends State<WorkspaceView> {
             current: widget.workspaces[_currentWorkspace].label,
             onAdd: (name) {
               widget.workspaces.add(Workspace.create(name));
-              _currentWorkspace = widget.workspaces.length - 1;
+              _controller.jumpToPage(widget.workspaces.length - 1);
             },
             onClose: (name) async {
               if (widget.workspaces.length > 1) {

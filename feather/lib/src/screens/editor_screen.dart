@@ -3,7 +3,6 @@ import 'package:feather/src/framework/framework.dart';
 import 'package:feather/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:extras/extras.dart';
-import 'package:flutter/services.dart';
 
 class EditorScreen extends StatefulWidget {
   final Color backgroundColor;
@@ -44,6 +43,12 @@ class _EditorScreenState extends State<EditorScreen>
           ),
           view: ViewContainer(
             actions: [
+              ActionWidget(
+                icon: Icons.save,
+                onTap: () {
+                  Framework.saveAsJson(box);
+                },
+              ),
               ActionWidget(
                 icon: Icons.fullscreen,
                 onTap: () {

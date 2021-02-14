@@ -22,4 +22,9 @@ class Framework {
     final code = _generateCode(box, label: label);
     return DartFormatter().format(code);
   }
+
+  static Future<void> saveAsJson(BoxMixin box) async {
+    final json = _generateJson(box);
+    print(json);
+  }
 }

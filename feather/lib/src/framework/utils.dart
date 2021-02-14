@@ -31,3 +31,5 @@ Future _init() async {
 
 String _generateCode(BoxMixin box, {String label = 'Output'}) =>
     CodeEngine().encode(box, className: label);
+
+Map<String, dynamic> _generateJson(BoxMixin box) => JsonEngine().encode(box);

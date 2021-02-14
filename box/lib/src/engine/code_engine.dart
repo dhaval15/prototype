@@ -22,18 +22,23 @@ class $className extends StatelessWidget {
           box.props
               .where(_isPresent)
               .where(_isChildNotNull)
-              .map((prop) =>
-                  (prop.index == null ? _parameter(prop.name) : '') +
-                  _convert(prop.box) +
-                  ',')
+              .map((prop) {
+                final value = _convert(prop.box);
+                if (value != null)
+                  return (prop.index == null ? _parameter(prop.name) : '') +
+                      value +
+                      ',';
+                return null;
+              })
+              .where((value) => value != null)
               .join('') +
           ')';
     if (box is ChildBox) return _convert(box.box);
     if (box is BaseMultiBox)
       return '[' + box.boxes.map((b) => _convert(b)).join(',') + ',]';
     if (box.value is String) return '\'${box.value}\'';
-
-    return box.value.toString();
+    if (box.value != null) return box.value.toString();
+    return null;
   }
 
   String _parameter(String label) => _camelCase(label) + ':';

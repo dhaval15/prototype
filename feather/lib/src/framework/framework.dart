@@ -18,9 +18,8 @@ part 'utils.dart';
 class Framework {
   static Future init() => _init();
 
-  static String generateCode(BoxMixin box) {
-    final code = _generateCode(box);
-    print(code);
+  static String generateCode(BoxMixin box, {String label = 'Output'}) {
+    final code = _generateCode(box, label: label);
     return DartFormatter().format(code);
   }
 }

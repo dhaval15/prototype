@@ -29,4 +29,5 @@ Future _init() async {
   });
 }
 
-String _generateCode(BoxMixin box) => CodeEngine().encode(box);
+String _generateCode(BoxMixin box, {String label = 'Output'}) =>
+    CodeEngine().encode(box, className: label);

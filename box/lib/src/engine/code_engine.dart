@@ -2,11 +2,11 @@ import 'package:box/src/box/box.dart';
 import 'package:box/src/mixins/mixins.dart';
 
 class CodeEngine {
-  String encode(BoxMixin box) {
+  String encode(BoxMixin box, {String className = 'Output'}) {
     return '''
 import 'package:flutter/material.dart';
 
-class Output extends StatelessWidget {
+class $className extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 	  return ${_convert(box)};

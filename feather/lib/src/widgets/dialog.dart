@@ -6,6 +6,7 @@ class FancyDialog extends StatelessWidget {
   final List<Widget> children;
   final List<Widget> actions;
   final double width;
+  final Color color;
 
   const FancyDialog({
     Key key,
@@ -13,31 +14,25 @@ class FancyDialog extends StatelessWidget {
     this.children,
     this.width,
     this.actions,
+    this.color,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      child: Container(
-        width: width,
-        padding: EdgeInsets.all(16),
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            if (title != null)
-              Text(
-                title,
-                style: context.headline5,
-              ).center().padding(bottom: 8),
-            ...children,
-            if (actions != null)
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: actions,
-              ).centerRight().padding(top: 8),
-          ],
-        ),
+    return SimpleDialog(
+      backgroundColor: color,
+      contentPadding: EdgeInsets.all(24),
+      title: Center(
+        child: Text(title ?? ''),
       ),
+      children: [
+        ...children,
+        if (actions != null)
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: actions,
+          ).centerRight().padding(top: 8),
+      ],
     );
   }
 }

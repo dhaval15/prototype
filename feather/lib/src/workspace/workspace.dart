@@ -12,6 +12,7 @@ class Workspace extends StatelessWidget {
       label,
       EditorScreen(
         key: UniqueKey(),
+        label: label,
       ));
 
   @override

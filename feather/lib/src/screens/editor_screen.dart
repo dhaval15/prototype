@@ -1,12 +1,19 @@
+import 'package:feather/src/code_viewer/code_dialog.dart';
 import 'package:feather/src/framework/framework.dart';
 import 'package:feather/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:extras/extras.dart';
+import 'package:flutter/services.dart';
 
 class EditorScreen extends StatefulWidget {
   final Color backgroundColor;
+  final String label;
 
-  EditorScreen({Key key, this.backgroundColor}) : super(key: key);
+  EditorScreen({
+    Key key,
+    this.backgroundColor,
+    this.label,
+  }) : super(key: key);
 
   @override
   _EditorScreenState createState() => _EditorScreenState();
@@ -46,16 +53,8 @@ class _EditorScreenState extends State<EditorScreen>
               ActionWidget(
                 icon: Icons.code,
                 onTap: () {
-                  final code = Framework.generateCode(box);
-                  showDialog(
-                    context: context,
-                    builder: (context) => FancyDialog(
-                      title: 'Code',
-                      children: [
-                        Text(code),
-                      ],
-                    ),
-                  );
+                  final code = Framework.generateCode(box, label: widget.label);
+                  CodeDialog.show(context, code);
                 },
               ),
             ],

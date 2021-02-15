@@ -3,18 +3,18 @@ import 'package:box/box.dart';
 import 'flutter_box.dart';
 
 class PaddingBox extends WidgetBox<Padding> with ListViewLayoutProvider {
-  PaddingBox([data = const {}])
+  PaddingBox({data = const {}, MultiBox parent})
       : child = Prop(
-          box: ChildBox.dynamic(data['child']),
+          box: ChildBox.dynamic(data: data['child']),
           name: 'Child',
           type: PropType.value,
         ),
         padding = Prop(
-          box: EdgeInsets$onlyBox(data['padding'] ?? {}),
+          box: EdgeInsets$onlyBox(data: data['padding'] ?? {}),
           name: 'Padding',
           type: PropType.value,
         ),
-        super();
+        super(parent: parent);
 
   final Prop child, padding;
 
@@ -26,6 +26,7 @@ class PaddingBox extends WidgetBox<Padding> with ListViewLayoutProvider {
         child: child.value,
         padding: padding.value,
       );
+
   @override
   String get boxType => 'Padding';
 }

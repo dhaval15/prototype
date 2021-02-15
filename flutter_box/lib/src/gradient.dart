@@ -7,18 +7,20 @@ class LinearGradientBox extends CompositeBox<LinearGradient>
     with ComplexLayoutProvider {
   LinearGradientBox([data = const {}])
       : colors = Prop(
-          box: MultiBox(data['colors'] ?? [],
-              onAdd: () => ColorBox.dynamic(Colors.white)),
+          box: MultiBox(
+              data: data['colors'] ?? [],
+              onAdd: (parent) =>
+                  ColorBox.dynamic(data: Colors.white, parent: parent)),
           name: 'Colors',
           type: PropType.fromData(data['colors']),
         ),
         begin = Prop(
-          box: AlignmentBox(data['begin'] ?? {}),
+          box: AlignmentBox(data: data['begin'] ?? {}),
           name: 'begin',
           type: PropType.value,
         ),
         end = Prop(
-          box: AlignmentBox(data['begin'] ?? {}),
+          box: AlignmentBox(data: data['begin'] ?? {}),
           name: 'begin',
           type: PropType.value,
         ),

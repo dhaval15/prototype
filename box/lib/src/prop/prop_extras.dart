@@ -44,8 +44,11 @@ mixin FieldExposerMixin<T> on PropMixin<T> {
   void _onMenuEntrySelected(BuildContext context, ActionEntry entry) {
     switch (entry) {
       case ActionEntry.Delete:
-        disable();
-        break;
+        {
+          box.parent?.remove(box);
+          disable();
+          break;
+        }
       case ActionEntry.Lambda:
         break;
       case ActionEntry.Scoped:

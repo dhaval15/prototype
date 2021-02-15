@@ -1,4 +1,4 @@
-BoxShadow  BoxShadow Complex
+BoxShadow  BoxShadow Complex Composite
 BlurRadius         blurRadius          DoubleBox.dynamic    4    	           permanant
 Color              color               ColorBox.dynamic     Colors.black           permanant
 SpreadRadius       spreadRadius        DoubleBox.dynamic    4		           permanant 

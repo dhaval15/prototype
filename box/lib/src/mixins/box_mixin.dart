@@ -1,3 +1,4 @@
+import 'package:box/box.dart';
 import 'package:box/src/prop/prop.dart';
 import 'package:flutter/material.dart';
 import 'package:fountain/fountain.dart';
@@ -16,6 +17,7 @@ mixin BoxMixin<T>
   set value(dynamic value);
   Future execute();
   Sprinkle get sprinkle;
+  MultiBox get parent => null;
 
   @override
   void onValue(T value) {}

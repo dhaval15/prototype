@@ -1,4 +1,4 @@
-BorderRadius BorderRadius.only Complex
+BorderRadius BorderRadius.only Complex Composite
 TopLeft 	topLeft			RadiusBox.dynamic	0	permanant 
 TopRight 	topRight		RadiusBox.dynamic	0	permanant 
 BottomRight 	bottomRight		RadiusBox.dynamic	0	permanant 

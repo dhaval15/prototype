@@ -10,11 +10,11 @@ abstract class BaseMultiBox<T> extends Lambda
         ComplexEditorProvider {
   final ListSprinkle sprinkle;
   final List<BoxMixin> boxes;
-  final BoxMixin Function() onAdd;
-  BaseMultiBox(List boxes, {this.onAdd})
-      : this.boxes = List.from(boxes ?? []),
+  final BoxMixin Function(BoxMixin) onAdd;
+  BaseMultiBox({List data, this.onAdd})
+      : this.boxes = List.from(data ?? []),
         this.sprinkle = ListSprinkle(
-            boxes.map((box) => box.sprinkle).toList().cast<Sprinkle>()),
+            data?.map((box) => box.sprinkle)?.toList()?.cast<Sprinkle>() ?? []),
         super(null, null);
 
   List<T> get value => sprinkle.last.isEmpty ? <T>[] : sprinkle.last.cast<T>();
@@ -24,15 +24,17 @@ abstract class BaseMultiBox<T> extends Lambda
   }
 
   Future append({BoxMixin lambda}) async {
-    final box = lambda ?? onAdd();
+    final box = lambda ?? onAdd(this);
     boxes.add(box);
     await box.execute();
     sprinkle.append(box.sprinkle);
   }
 
-  void remove(lambda) async {
-    lambda.kill();
-    boxes.remove(lambda);
+  void remove(BoxMixin box) async {
+    (box as Lambda).kill();
+    boxes.remove(box);
+    sprinkle.remove(box.sprinkle);
+    redraw();
   }
 
   Future execute() async {

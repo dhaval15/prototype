@@ -3,31 +3,31 @@ import 'package:box/box.dart';
 import 'flutter_box.dart';
 
 class BoxShadowBox extends CompositeBox<BoxShadow> with ComplexLayoutProvider {
-  BoxShadowBox([data = const {}])
+  BoxShadowBox({data = const {}, MultiBox parent})
       : blurRadius = Prop(
-          box: DoubleBox.dynamic(data['blurRadius'] ?? 4),
+          box: DoubleBox.dynamic(data: data['blurRadius'] ?? 4),
           name: 'BlurRadius',
           defaultValue: 4,
           type: PropType.value,
         ),
         color = Prop(
-          box: ColorBox.dynamic(data['color'] ?? Colors.black),
+          box: ColorBox.dynamic(data: data['color'] ?? Colors.black),
           name: 'Color',
           defaultValue: Colors.black,
           type: PropType.value,
         ),
         spreadRadius = Prop(
-          box: DoubleBox.dynamic(data['spreadRadius'] ?? 4),
+          box: DoubleBox.dynamic(data: data['spreadRadius'] ?? 4),
           name: 'SpreadRadius',
           defaultValue: 4,
           type: PropType.value,
         ),
         offset = Prop(
-          box: OffsetBox(data['offset'] ?? {}),
+          box: OffsetBox(data: data['offset'] ?? {}),
           name: 'Offset',
           type: PropType.value,
         ),
-        super();
+        super(parent: parent);
 
   final Prop blurRadius, color, spreadRadius, offset;
 
@@ -41,6 +41,7 @@ class BoxShadowBox extends CompositeBox<BoxShadow> with ComplexLayoutProvider {
         spreadRadius: spreadRadius.value,
         offset: offset.value,
       );
+
   @override
   String get boxType => 'BoxShadow';
 }

@@ -1,3 +1,4 @@
+import 'package:box/box.dart';
 import 'package:box/src/mixins/mixins.dart';
 import 'package:box/src/providers/providers.dart';
 import 'package:lambda/lambda.dart';
@@ -12,10 +13,11 @@ abstract class BaseCompositeBox<T> extends Lambda
         LayoutProvider,
         PropsProvider {
   final sprinkle = Sprinkle();
+  final MultiBox parent;
 
-  BaseCompositeBox() : super(null, null);
+  BaseCompositeBox({this.parent}) : super(null, null);
 
-  BaseCompositeBox.dynamic(dynamic value)
+  BaseCompositeBox.dynamic(dynamic value, {this.parent})
       : super(
           value is Lambda ? value.type : CONST,
           value is Lambda ? value.params : [value],

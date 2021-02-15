@@ -24,7 +24,7 @@ class LambdaExecutor {
 
   void kill() {
     paramsSprinkle?.cancel();
-    vein.kill();
+    vein?.kill();
     Vein.instance.remove(vein);
     vein = null;
   }

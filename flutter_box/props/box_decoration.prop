@@ -1,4 +1,4 @@
-BoxDecoration BoxDecoration Complex
+BoxDecoration BoxDecoration Complex Composite
 BorderRadius 	borderRadius	BorderRadius$onlyBox		{}	absent
 Color	 	color		ColorBox.dynamic		null	absent
 Border	 	border		Border$allBox			{}	absent

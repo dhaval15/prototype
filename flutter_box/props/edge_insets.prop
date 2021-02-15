@@ -1,12 +1,12 @@
-EdgeInsets EdgeInsets.only Complex
+EdgeInsets EdgeInsets.only Complex Composite
 Left 	left	DoubleBox.dynamic	0	permanant 
 Top 	top	DoubleBox.dynamic	0	permanant 
 Right 	right	DoubleBox.dynamic	0	permanant 
 Bottom 	bottom	DoubleBox.dynamic	0	permanant 
 
-EdgeInsets EdgeInsets.symmetric Complex
+EdgeInsets EdgeInsets.symmetric Complex Composite
 Vertical 	vertical	DoubleBox.dynamic	0	permanant 
 Horizontal 	horizontal	DoubleBox.dynamic	0	permanant 
 
-EdgeInsets EdgeInsets.all Complex
+EdgeInsets EdgeInsets.all Complex Composite
 All 	#0	DoubleBox.dynamic	0	permanant 

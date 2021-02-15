@@ -1,5 +1,5 @@
-Row Row ListView
-Children		children		MultiBox<Widget>		[]    	permanant
-MainAxisSize		mainAxisSize		MainAxisSizeBox.dynamic		null    absent
-MainAxisAlignment	mainAxisAlignment	MainAxisAlignmentBox.dynamic	null	absent
-CrossAxisAlignment	crossAxisAlignment	CrossAxisAlignmentBox.dynamic	null	absent
+Row Row ListView MultiWidget
+Children		children		ChildrenBox			[]    				permanant
+MainAxisSize		mainAxisSize		MainAxisSizeBox.dynamic		MainAxisSize.min   		absent
+MainAxisAlignment	mainAxisAlignment	MainAxisAlignmentBox.dynamic	MainAxisAlignment.start		absent
+CrossAxisAlignment	crossAxisAlignment	CrossAxisAlignmentBox.dynamic	CrossAxisAlignment.start	absent

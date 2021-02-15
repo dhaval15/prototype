@@ -168,7 +168,7 @@ mixin MultiFieldProvider<T> on BaseMultiBox<T>
     for (int i = 0; i < boxes.length; i++) {
       children.add(Prop(
         box: boxes[i],
-        name: 'Entry $i',
+        name: 'Entry',
         type: PropType.value,
       ).editor);
     }

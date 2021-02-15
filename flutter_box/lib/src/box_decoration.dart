@@ -20,9 +20,13 @@ class BoxDecorationBox extends CompositeBox<BoxDecoration>
           name: 'Border',
           type: PropType.fromData(data['border']),
         ),
-        boxShadow = Prop(
-          box: MultiBox(data: data['boxShadow']),
+        boxShadow = Prop<List<BoxShadow>>(
+          box: MultiBox<BoxShadow>(
+            data: data['boxShadow'] ?? [],
+            onAdd: (parent) => BoxShadowBox(parent: parent),
+          ),
           name: 'BoxShadow',
+          defaultValue: [],
           type: PropType.fromData(data['boxShadow']),
         ),
         super(parent: parent);
@@ -33,12 +37,14 @@ class BoxDecorationBox extends CompositeBox<BoxDecoration>
   List<Prop> get props => [borderRadius, color, border, boxShadow];
 
   @override
-  BoxDecoration get value => BoxDecoration(
-        borderRadius: borderRadius.value,
-        color: color.value,
-        border: border.value,
-        boxShadow: boxShadow.value,
-      );
+  BoxDecoration get value {
+    return BoxDecoration(
+      borderRadius: borderRadius.value,
+      color: color.value,
+      border: border.value,
+      boxShadow: boxShadow.value,
+    );
+  }
 
   @override
   String get boxType => 'BoxDecoration';

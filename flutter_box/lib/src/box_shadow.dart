@@ -11,9 +11,9 @@ class BoxShadowBox extends CompositeBox<BoxShadow> with ComplexLayoutProvider {
           type: PropType.value,
         ),
         color = Prop(
-          box: ColorBox.dynamic(data: data['color'] ?? Colors.black),
+          box: ColorBox.dynamic(data: data['color'] ?? Color(0x33000000)),
           name: 'Color',
-          defaultValue: Colors.black,
+          defaultValue: Color(0x33000000),
           type: PropType.value,
         ),
         spreadRadius = Prop(

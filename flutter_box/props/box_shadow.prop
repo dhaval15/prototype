@@ -1,5 +1,5 @@
 BoxShadow  BoxShadow Complex Composite
 BlurRadius         blurRadius          DoubleBox.dynamic    4    	           permanant
-Color              color               ColorBox.dynamic     Colors.black           permanant
+Color              color               ColorBox.dynamic     Color(0x33000000)      permanant
 SpreadRadius       spreadRadius        DoubleBox.dynamic    4		           permanant 
 Offset             offset              OffsetBox            {}                     permanant

@@ -1,45 +1,24 @@
+import 'package:box/box.dart';
 import 'package:box/src/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'core_box.dart';
 
-class FontWeightBox = CoreBox<FontWeight>
-    with
-        OptionFieldProvider<FontWeight>,
-        FontWeightProvider,
-        OptionConverter<FontWeight>;
+abstract class OptionBox<T> = CoreBox<T>
+    with OptionFieldProvider<T>, OptionConverter<T>, OptionJsonProvider;
 
-class TextAlignBox = CoreBox<TextAlign>
-    with
-        OptionFieldProvider<TextAlign>,
-        TextAlignProvider,
-        OptionConverter<TextAlign>;
+class FontWeightBox = OptionBox<FontWeight> with FontWeightProvider;
 
-class MainAxisAlignmentBox = CoreBox<MainAxisAlignment>
-    with
-        OptionFieldProvider<MainAxisAlignment>,
-        MainAxisAlignmentProvider,
-        OptionConverter<MainAxisAlignment>;
+class TextAlignBox = OptionBox<TextAlign> with TextAlignProvider;
 
-class CrossAxisAlignmentBox = CoreBox<CrossAxisAlignment>
-    with
-        OptionFieldProvider<CrossAxisAlignment>,
-        CrossAxisAlignmentProvider,
-        OptionConverter<CrossAxisAlignment>;
+class MainAxisAlignmentBox = OptionBox<MainAxisAlignment>
+    with MainAxisAlignmentProvider;
 
-class MainAxisSizeBox = CoreBox<MainAxisSize>
-    with
-        OptionFieldProvider<MainAxisSize>,
-        MainAxisSizeProvider,
-        OptionConverter<MainAxisSize>;
+class CrossAxisAlignmentBox = OptionBox<CrossAxisAlignment>
+    with CrossAxisAlignmentProvider;
 
-class VerticalDirectionBox = CoreBox<VerticalDirection>
-    with
-        OptionFieldProvider<VerticalDirection>,
-        VerticalDirectionProvider,
-        OptionConverter<VerticalDirection>;
+class MainAxisSizeBox = OptionBox<MainAxisSize> with MainAxisSizeProvider;
 
-class FontStyleBox = CoreBox<FontStyle>
-    with
-        OptionFieldProvider<FontStyle>,
-        FontStyleProvider,
-        OptionConverter<FontStyle>;
+class VerticalDirectionBox = OptionBox<VerticalDirection>
+    with VerticalDirectionProvider;
+
+class FontStyleBox = OptionBox<FontStyle> with FontStyleProvider;

@@ -5,6 +5,8 @@ export 'package:fountain/fountain.dart';
 export 'package:select/select.dart';
 export 'registry.dart';
 
+import 'dart:convert';
+
 import 'package:box/box.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:flutter_box/flutter_box.dart';
@@ -24,7 +26,11 @@ class Framework {
   }
 
   static Future<void> saveAsJson(BoxMixin box) async {
-    final json = _generateJson(box);
-    print(json);
+    final map = _generateJson(box);
+    print(JsonEncoder.withIndent('    ').convert(map));
+    final newBox = _loadBoxFromJson(map);
+    print(newBox);
+    final newMap = _generateJson(box);
+    print(JsonEncoder.withIndent('    ').convert(newMap));
   }
 }

@@ -1,10 +1,12 @@
+import 'package:box/box.dart';
 import 'package:box/src/box/box.dart';
 import 'package:box/src/mixins/mixins.dart';
-import 'package:flutter/material.dart';
 
 class JsonEngine {
-  BoxMixin decode(Map<String, dynamic> json) {
-    return null;
+  BoxMixin decode(Map<String, dynamic> json, BoxGeneratorMixin generator) {
+    final type = json['_type'];
+    final box = generator.any(type)(json);
+    return box;
   }
 
   Map<String, dynamic> encode(BoxMixin box) {
@@ -27,10 +29,9 @@ class JsonEngine {
     if (box is ChildBox) return _convert(box.box);
     if (box is BaseMultiBox)
       return '[' + box.boxes.map((b) => _convert(b)).join(',') + ',]';
-    if (box.value is Color) return box.value.value;
-    if (box.value is String) return '"${box.value}"';
-    if (box.value != null) return box.value;
-    return null;
+    if (box.value == null) return null;
+    if (box is JsonMixin) return (box as JsonMixin).json;
+    throw 'Unsupported Type ${box.runtimeType}';
   }
 
   String _parameter(String label) => _camelCase(label);

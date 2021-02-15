@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 export 'prop_mixin.dart';
 export 'box_mixin.dart';
 export 'scope_mixin.dart';
+export 'json_mixin.dart';
 export 'prop_type.dart';
 
 mixin ValueUpdateMixin<T> {

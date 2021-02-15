@@ -33,3 +33,6 @@ String _generateCode(BoxMixin box, {String label = 'Output'}) =>
     CodeEngine().encode(box, className: label);
 
 Map<String, dynamic> _generateJson(BoxMixin box) => JsonEngine().encode(box);
+
+BoxMixin _loadBoxFromJson(Map<String, dynamic> json) =>
+    JsonEngine().decode(json, BoxRegistery.instance);

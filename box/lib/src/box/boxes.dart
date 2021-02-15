@@ -12,7 +12,8 @@ class DoubleBox = CoreBox<double> with DoubleFieldProvider, DoubleConverter;
 class RadiusBox = CoreBox<Radius> with RadiusFieldProvider, RadiusConverter;
 class IntBox = CoreBox<int> with IntFieldProvider, IntConverter;
 class BoolBox = CoreBox<bool> with BoolFieldProvider, BoolConverter;
-class ColorBox = CoreBox<Color> with ColorFieldProvider, ColorConverter;
+class ColorBox = CoreBox<Color>
+    with ColorFieldProvider, ColorConverter, ColorJsonProvider;
 class ChildBox = BaseChildBox with ChildFieldProvider, ChildCodeProvider;
 abstract class CompositeBox<T> = BaseCompositeBox<T>
     with CompositeFieldProvider, CompositeCodeProvider;

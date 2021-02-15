@@ -7,6 +7,7 @@ class CoreBox<T> extends Lambda
         BoxMixin<T>,
         ConverterMixin<T>,
         SimpleEditorProvider,
+        JsonMixin,
         CoreCodeProvider {
   final sprinkle = Sprinkle();
 
@@ -47,4 +48,7 @@ class CoreBox<T> extends Lambda
   T convert(value) {
     return value;
   }
+
+  @override
+  get json => value;
 }

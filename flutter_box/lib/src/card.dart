@@ -3,29 +3,29 @@ import 'package:box/box.dart';
 import 'flutter_box.dart';
 
 class CardBox extends WidgetBox<Card> with ListViewLayoutProvider {
-  CardBox([data = const {}])
+  CardBox({data = const {}, MultiBox parent})
       : child = Prop(
-          box: ChildBox.dynamic(data['child']),
+          box: ChildBox.dynamic(data: data['child']),
           name: 'Child',
           type: PropType.value,
         ),
         color = Prop(
-          box: ColorBox.dynamic(data['color']),
+          box: ColorBox.dynamic(data: data['color']),
           name: 'Color',
           type: PropType.value,
         ),
         elevation = Prop(
-          box: DoubleBox.dynamic(data['elevation'] ?? 4),
+          box: DoubleBox.dynamic(data: data['elevation'] ?? 4),
           name: 'Elevation',
           defaultValue: 4,
           type: PropType.value,
         ),
         shape = Prop(
-          box: RoundedRectangleBorderBox(data['shape'] ?? {}),
+          box: BeveledRectangleBorderBox(data: data['shape'] ?? {}),
           name: 'Shape',
           type: PropType.value,
         ),
-        super();
+        super(parent: parent);
 
   final Prop child, color, elevation, shape;
 
@@ -39,6 +39,7 @@ class CardBox extends WidgetBox<Card> with ListViewLayoutProvider {
         elevation: elevation.value,
         shape: shape.value,
       );
+
   @override
   String get boxType => 'Card';
 }

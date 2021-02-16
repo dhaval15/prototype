@@ -1,4 +1,4 @@
-Text Text ListView
+Text Text ListView Widget
 Text          #0         StringBox.dynamic            'Hello'         permanant
 Style         style      TextStyleBox                 {}              present
 TextAlign     textAlign  TextAlignBox.dynamic         TextAlign.start absent

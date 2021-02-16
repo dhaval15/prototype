@@ -4,20 +4,20 @@ import 'flutter_box.dart';
 
 class BorderSideBox extends CompositeBox<BorderSide>
     with ComplexLayoutProvider {
-  BorderSideBox([data = const {}])
+  BorderSideBox({data = const {}, MultiBox parent})
       : width = Prop(
-          box: DoubleBox.dynamic(data['width'] ?? 1),
+          box: DoubleBox.dynamic(data: data['width'] ?? 1),
           name: 'Width',
           defaultValue: 1,
           type: PropType.value,
         ),
         color = Prop(
-          box: ColorBox.dynamic(data['color'] ?? Colors.white),
+          box: ColorBox.dynamic(data: data['color'] ?? Colors.white),
           name: 'Color',
           defaultValue: Colors.white,
           type: PropType.value,
         ),
-        super();
+        super(parent: parent);
 
   final Prop width, color;
 
@@ -29,6 +29,7 @@ class BorderSideBox extends CompositeBox<BorderSide>
         width: width.value,
         color: color.value,
       );
+
   @override
   String get boxType => 'BorderSide';
 }

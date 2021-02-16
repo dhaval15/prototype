@@ -1,3 +1,4 @@
+import 'package:box/box.dart';
 import 'package:box/src/mixins/mixins.dart';
 import 'package:box/src/providers/providers.dart';
 
@@ -14,14 +15,15 @@ abstract class BaseChildBox extends Lambda
         ChildMixin,
         SimpleEditorProvider {
   final sprinkle = Sprinkle();
+  final MultiBox parent;
 
-  BaseChildBox(this.box) : super(CONST, [null]);
+  BaseChildBox(this.box, {this.parent}) : super(CONST, [null]);
 
-  BaseChildBox.value(value) : super(CONST, [value]);
+  BaseChildBox.value(value, {this.parent}) : super(CONST, [value]);
 
-  BaseChildBox.dynamic(value)
-      : box = value is CompositeBox<Widget> ? value : null,
-        super(CONST, value is CompositeBox<Widget> ? [null] : [value]);
+  BaseChildBox.dynamic({data, this.parent})
+      : box = data is CompositeBox<Widget> ? data : null,
+        super(CONST, data is CompositeBox<Widget> ? [null] : [data]);
 
   Widget boxedValue;
 

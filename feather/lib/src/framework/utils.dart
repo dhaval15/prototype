@@ -6,26 +6,29 @@ Future _init() async {
   ScopeBox.generator = BoxRegistery.instance;
   // JsonEngine.registry = BoxRegistery.instance.any;
   BoxRegistery.instance.registerManyWidgets({
-    'Container': ([Map<String, dynamic> data = const {}]) => ContainerBox(data),
-    'Text': ([Map<String, dynamic> data = const {}]) => TextBox(data),
-    'Center': ([Map<String, dynamic> data = const {}]) => CenterBox(data),
-    'Card': ([Map<String, dynamic> data = const {}]) => CardBox(data),
-    'Padding': ([Map<String, dynamic> data = const {}]) => PaddingBox(data),
-    'Column': ([Map<String, dynamic> data = const {}]) => ColumnBox(data),
-    'Row': ([Map<String, dynamic> data = const {}]) => RowBox(data),
+    'Container': ([Map<String, dynamic> data = const {}]) =>
+        ContainerBox(data: data),
+    'Text': ([Map<String, dynamic> data = const {}]) => TextBox(data: data),
+    'Center': ([Map<String, dynamic> data = const {}]) => CenterBox(data: data),
+    'Card': ([Map<String, dynamic> data = const {}]) => CardBox(data: data),
+    'Padding': ([Map<String, dynamic> data = const {}]) =>
+        PaddingBox(data: data),
+    'Column': ([Map<String, dynamic> data = const {}]) => ColumnBox(data: data),
+    'Row': ([Map<String, dynamic> data = const {}]) => RowBox(data: data),
     'Scope': ([Map<String, dynamic> data = const {}]) => ScopeBox(data),
     // 'Scope': ([Map<String, dynamic> data = const {}]) => ScopeBox(data),
   });
   BoxRegistery.instance.registerManyBoxes({
-    'BoxShadow': ([Map<String, dynamic> data = const {}]) => BoxShadowBox(data),
+    'BoxShadow': ([Map<String, dynamic> data = const {}]) =>
+        BoxShadowBox(data: data),
     'String': ([Map<String, dynamic> data = const {}]) =>
-        StringBox.dynamic(data['value'] ?? ''),
+        StringBox.dynamic(data: data['value'] ?? ''),
     'Color': ([Map<String, dynamic> data = const {}]) =>
-        ColorBox.dynamic(data['value']),
+        ColorBox.dynamic(data: data['value']),
     'Double': ([Map<String, dynamic> data = const {}]) =>
-        DoubleBox.dynamic(data['value'] ?? ''),
+        DoubleBox.dynamic(data: data['value'] ?? ''),
     'Integer': ([Map<String, dynamic> data = const {}]) =>
-        IntBox.dynamic(data['value'] ?? 0),
+        IntBox.dynamic(data: data['value'] ?? 0),
   });
 }
 

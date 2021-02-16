@@ -4,47 +4,48 @@ import 'flutter_box.dart';
 
 class BoxDecorationBox extends CompositeBox<BoxDecoration>
     with ComplexLayoutProvider {
-  BoxDecorationBox([data = const {}])
+  BoxDecorationBox({data = const {}, MultiBox parent})
       : borderRadius = Prop(
-          box: BorderRadius$onlyBox(data['borderRadius'] ?? {}),
+          box: BorderRadius$onlyBox(data: data['borderRadius'] ?? {}),
           name: 'BorderRadius',
           type: PropType.fromData(data['borderRadius']),
         ),
         color = Prop(
-          box: ColorBox.dynamic(data['color']),
+          box: ColorBox.dynamic(data: data['color']),
           name: 'Color',
           type: PropType.fromData(data['color']),
         ),
         border = Prop(
-          box: Border$allBox(data['border'] ?? {}),
+          box: Border$allBox(data: data['border'] ?? {}),
           name: 'Border',
           type: PropType.fromData(data['border']),
         ),
-        boxShadow = Prop(
-          box: MultiBox(data['boxShadow'] ?? [], onAdd: () => BoxShadowBox()),
+        boxShadow = Prop<List<BoxShadow>>(
+          box: MultiBox<BoxShadow>(
+            data: data['boxShadow'] ?? [],
+            onAdd: (parent) => BoxShadowBox(parent: parent),
+          ),
           name: 'BoxShadow',
+          defaultValue: [],
           type: PropType.fromData(data['boxShadow']),
         ),
-        gradient = Prop(
-          box: LinearGradientBox(),
-          name: 'Gradient',
-          type: PropType.fromData(data['gradient']),
-        ),
-        super();
+        super(parent: parent);
 
-  final Prop borderRadius, color, border, boxShadow, gradient;
+  final Prop borderRadius, color, border, boxShadow;
 
   @override
-  List<Prop> get props => [borderRadius, color, border, boxShadow, gradient];
+  List<Prop> get props => [borderRadius, color, border, boxShadow];
 
   @override
-  BoxDecoration get value => BoxDecoration(
-        borderRadius: borderRadius.value,
-        color: color.value,
-        border: border.value,
-        gradient: gradient.value,
-        boxShadow: boxShadow.value?.cast<BoxShadow>(),
-      );
+  BoxDecoration get value {
+    return BoxDecoration(
+      borderRadius: borderRadius.value,
+      color: color.value,
+      border: border.value,
+      boxShadow: boxShadow.value,
+    );
+  }
+
   @override
   String get boxType => 'BoxDecoration';
 }

@@ -3,33 +3,33 @@ import 'package:box/box.dart';
 import 'flutter_box.dart';
 
 class ContainerBox extends WidgetBox<Container> with ListViewLayoutProvider {
-  ContainerBox([data = const {}])
+  ContainerBox({data = const {}, MultiBox parent})
       : width = Prop(
-          box: DoubleBox.dynamic(data['width']),
+          box: DoubleBox.dynamic(data: data['width']),
           name: 'Width',
           type: PropType.value,
         ),
         height = Prop(
-          box: DoubleBox.dynamic(data['height']),
+          box: DoubleBox.dynamic(data: data['height']),
           name: 'Height',
           type: PropType.value,
         ),
         child = Prop(
-          box: ChildBox.dynamic(data['child']),
+          box: ChildBox.dynamic(data: data['child']),
           name: 'Child',
           type: PropType.value,
         ),
         color = Prop(
-          box: ColorBox.dynamic(data['color']),
+          box: ColorBox.dynamic(data: data['color']),
           name: 'Color',
           type: PropType.fromData(data['color']),
         ),
         decoration = Prop(
-          box: BoxDecorationBox(data['decoration'] ?? {}),
+          box: BoxDecorationBox(data: data['decoration'] ?? {}),
           name: 'Decoration',
           type: PropType.fromData(data['decoration']),
         ),
-        super();
+        super(parent: parent);
 
   final Prop width, height, child, color, decoration;
 

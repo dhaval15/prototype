@@ -1,6 +1,6 @@
-TextStyle  TextStyle Complex
-FontSize         fontSize          DoubleBox.value          20.0    	     permanant
+TextStyle  TextStyle Complex Composite
+FontSize         fontSize          DoubleBox.dynamic          20.0    	     permanant
 Color            color             ColorBox.dynamic         Colors.black     permanant
 FontWeight       fontWeight        FontWeightBox.dynamic    FontWeight.w400  permanant          
-LetterSpacing    letterSpacing	   DoubleBox.value          0.0                absent
-WordSpacing    	 wordSpacing	   DoubleBox.value          0.0                absent
+LetterSpacing    letterSpacing	   DoubleBox.dynamic          0.0                absent
+WordSpacing    	 wordSpacing	   DoubleBox.dynamic          0.0                absent

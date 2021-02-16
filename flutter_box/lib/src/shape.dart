@@ -4,20 +4,20 @@ import 'flutter_box.dart';
 
 class BeveledRectangleBorderBox extends CompositeBox<BeveledRectangleBorder>
     with ComplexLayoutProvider {
-  BeveledRectangleBorderBox([data = const {}])
+  BeveledRectangleBorderBox({data = const {}, MultiBox parent})
       : borderRadius = Prop(
-          box: BorderRadius$onlyBox(data['borderRadius'] ?? {}),
+          box: BorderRadius$onlyBox(data: data['borderRadius'] ?? {}),
           name: 'BorderRadius',
           defaultValue: BorderRadius.zero,
           type: PropType.value,
         ),
         side = Prop(
-          box: BorderSideBox(data['side'] ?? {}),
+          box: BorderSideBox(data: data['side'] ?? {}),
           name: 'Side',
           defaultValue: BorderSide.none,
           type: PropType.value,
         ),
-        super();
+        super(parent: parent);
 
   final Prop borderRadius, side;
 
@@ -29,26 +29,27 @@ class BeveledRectangleBorderBox extends CompositeBox<BeveledRectangleBorder>
         borderRadius: borderRadius.value,
         side: side.value,
       );
+
   @override
-  String get boxType => 'Container';
+  String get boxType => 'BeveledRectangleBorder';
 }
 
 class RoundedRectangleBorderBox extends CompositeBox<RoundedRectangleBorder>
     with ComplexLayoutProvider {
-  RoundedRectangleBorderBox([data = const {}])
+  RoundedRectangleBorderBox({data = const {}, MultiBox parent})
       : borderRadius = Prop(
-          box: BorderRadius$onlyBox(data['borderRadius'] ?? {}),
+          box: BorderRadius$onlyBox(data: data['borderRadius'] ?? {}),
           name: 'BorderRadius',
           defaultValue: BorderRadius.zero,
           type: PropType.value,
         ),
         side = Prop(
-          box: BorderSideBox(data['side'] ?? {}),
+          box: BorderSideBox(data: data['side'] ?? {}),
           name: 'Side',
           defaultValue: BorderSide.none,
           type: PropType.value,
         ),
-        super();
+        super(parent: parent);
 
   final Prop borderRadius, side;
 
@@ -60,6 +61,7 @@ class RoundedRectangleBorderBox extends CompositeBox<RoundedRectangleBorder>
         borderRadius: borderRadius.value,
         side: side.value,
       );
+
   @override
   String get boxType => 'RoundedRectangleBorder';
 }

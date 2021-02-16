@@ -1,3 +1,4 @@
+import 'package:box/box.dart';
 import 'package:box/src/mixins/mixins.dart';
 import 'package:box/src/providers/providers.dart';
 import 'package:lambda/lambda.dart';
@@ -11,16 +12,19 @@ class CoreBox<T> extends Lambda
         CoreCodeProvider {
   final sprinkle = Sprinkle();
 
-  CoreBox(String type, List params) : super(type, params);
+  final MultiBox parent;
 
-  CoreBox.value(value) : super(CONST, [value]) {
+  CoreBox(String type, List params, {this.parent}) : super(type, params);
+
+  CoreBox.value(value, {this.parent}) : super(CONST, [value]) {
     boxedValue = convert(value);
   }
-  CoreBox.lambda(Lambda lambda) : super(lambda.type, lambda.params);
+  CoreBox.lambda(Lambda lambda, {this.parent})
+      : super(lambda.type, lambda.params);
 
-  CoreBox.dynamic(dynamic value)
-      : super(value is Lambda ? value.type : CONST,
-            value is Lambda ? value.params : [value]) {
+  CoreBox.dynamic({dynamic data, this.parent})
+      : super(data is Lambda ? data.type : CONST,
+            data is Lambda ? data.params : [data]) {
     if (!(value is Lambda)) boxedValue = convert(value);
   }
 

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:box/box.dart';
+import 'flutter_box.dart';
 
-class CenterBox extends WidgetBox<Center> with ListViewLayoutProvider {
-  CenterBox([data = const {}])
+class CenterBox extends WidgetBox<Center> with ComplexLayoutProvider {
+  CenterBox({data = const {}, MultiBox parent})
       : child = Prop(
-          box: ChildBox.dynamic(data['child']),
+          box: ChildBox.dynamic(data: data['child']),
           name: 'Child',
           type: PropType.value,
         ),
-        super();
+        super(parent: parent);
 
   final Prop child;
 
@@ -19,6 +20,7 @@ class CenterBox extends WidgetBox<Center> with ListViewLayoutProvider {
   Center get widget => Center(
         child: child.value,
       );
+
   @override
   String get boxType => 'Center';
 }

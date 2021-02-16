@@ -63,19 +63,21 @@ void writeCodeFromFile(File inFile, File outFile) async {
 
 class BoxBuilder {
   final List<Prop> props;
+  final String type;
   final String name;
   final String output;
   final String layout;
 
-  BoxBuilder(this.props, this.name, this.output, this.layout);
+  BoxBuilder({this.props, this.name, this.output, this.layout, this.type});
 
   factory BoxBuilder.fromList(List<String> list) {
     final data = list[0].split(RegExp(r'\s+'));
     return BoxBuilder(
-      list.sublist(1).map((item) => Prop.fromString(item)).toList(),
-      data[0],
-      data[1],
-      data[2],
+      props: list.sublist(1).map((item) => Prop.fromString(item)).toList(),
+      name: data[0],
+      output: data[1],
+      layout: data[2],
+      type: data[3],
     );
   }
 
@@ -94,23 +96,34 @@ class BoxBuilder {
   String generateClass() {
     final builder = ClassBuilder();
     builder.name = output.replaceFirst('.', '\$') + 'Box';
-    builder.extend = Reference('CompositeBox<$name>');
+    builder.extend = Reference('${type}Box<$name>');
     builder.mixins.add(Reference('${layout}LayoutProvider'));
-    builder.methods.addAll([propsField, valueField]);
+    builder.methods.addAll([propsField, valueField, boxTypeField]);
     builder.constructors.add((ConstructorBuilder()
-          ..optionalParameters.add((ParameterBuilder()
-                ..name = 'data'
-                ..defaultTo = Code('const {}'))
-              .build())
+          ..optionalParameters.addAll([
+            (ParameterBuilder()
+                  ..named = true
+                  ..name = 'data'
+                  ..defaultTo = Code('const {}'))
+                .build(),
+            (ParameterBuilder()
+                  ..named = true
+                  ..type = Reference('MultiBox')
+                  ..name = 'parent')
+                .build(),
+          ])
           ..initializers.addAll(initializers)
           ..initializers.add(Reference('super').call(
             [],
+            {
+              'parent': CodeExpression(Code('parent')),
+            },
           ).code))
         .build());
     final emitter = DartEmitter();
     String code = builder.build().accept(emitter).toString();
-    code = code.replaceFirst('super();',
-        'super();\n \n final Prop ${props.map((prop) => prop.camelCaseLabel).join(',')};');
+    code = code.replaceFirst(';',
+        ';\n \n final Prop ${props.map((prop) => prop.camelCaseLabel).join(',')};');
     code = code.replaceAll('@override', '\n @override');
     return code;
   }
@@ -142,13 +155,22 @@ import 'flutter_box.dart';
       .build();
 
   Method get valueField => (MethodBuilder()
-        ..name = 'value'
+        ..name = type == 'Composite' ? 'value' : 'widget'
         ..type = MethodType.getter
         ..annotations.add(CodeExpression(Code('override')))
         ..lambda = true
         ..body =
             Code('$output(${props.map((prop) => prop.expression).join(',')},)')
         ..returns = Reference(name))
+      .build();
+
+  Method get boxTypeField => (MethodBuilder()
+        ..name = 'boxType'
+        ..type = MethodType.getter
+        ..annotations.add(CodeExpression(Code('override')))
+        ..lambda = true
+        ..body = Code('\'$name\'')
+        ..returns = Reference('String'))
       .build();
 
   Constructor get constructor => (ConstructorBuilder()
@@ -215,7 +237,7 @@ class Prop {
       : '$camelCaseLabel:$camelCaseLabel.value';
 
   String get constructorExpression =>
-      'Prop(box:$type(data[\'$extractor\'] ${defaultValue != 'null' ? '??' + _defaultValue : ''}),name:\'$label\',$_defaultValueExpression$_fieldTypeExpression$_indexExpression)';
+      'Prop(box:$type(data:data[\'$extractor\'] ${defaultValue != 'null' ? '??' + _defaultValue : ''}),name:\'$label\',$_defaultValueExpression$_fieldTypeExpression$_indexExpression)';
 
   String get _fieldTypeExpression =>
       'type : ' +
@@ -228,7 +250,11 @@ class Prop {
           ? 'defaultValue:$defaultValue,'
           : '';
 
-  String get _defaultValue => !type.contains('.dynamic') ? '{}' : defaultValue;
+  String get _defaultValue => defaultValue == '[]'
+      ? '[]'
+      : !type.contains('.dynamic')
+          ? '{}'
+          : defaultValue;
 
   String get _indexExpression => extractor.contains('#')
       ? 'index:${int.parse(extractor.replaceFirst('#', ''))},'

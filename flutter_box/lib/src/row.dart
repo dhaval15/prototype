@@ -2,38 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:box/box.dart';
 
 class RowBox extends MultiWidgetBox<Row> with ListViewLayoutProvider {
-  RowBox([data = const {}])
+  RowBox({data = const {}, MultiBox parent})
       : children = Prop(
-          box: ChildrenBox(data['children'] ?? []),
+          box: ChildrenBox(data: data['children'] ?? []),
           name: 'Children',
           defaultValue: [],
           type: PropType.value,
         ),
         mainAxisSize = Prop(
-          box: MainAxisSizeBox.dynamic(data['mainAxisSize']),
+          box: MainAxisSizeBox.dynamic(
+              data: data['mainAxisSize'] ?? MainAxisSize.min),
           name: 'MainAxisSize',
           defaultValue: MainAxisSize.min,
           type: PropType.fromData(data['mainAxisSize']),
         ),
         mainAxisAlignment = Prop(
-          box: MainAxisAlignmentBox.dynamic(data['mainAxisAlignment']),
+          box: MainAxisAlignmentBox.dynamic(
+              data: data['mainAxisAlignment'] ?? MainAxisAlignment.start),
           name: 'MainAxisAlignment',
           defaultValue: MainAxisAlignment.start,
           type: PropType.fromData(data['mainAxisAlignment']),
         ),
         crossAxisAlignment = Prop(
-          box: CrossAxisAlignmentBox.dynamic(data['crossAxisAlignment']),
+          box: CrossAxisAlignmentBox.dynamic(
+              data: data['crossAxisAlignment'] ?? CrossAxisAlignment.start),
           name: 'CrossAxisAlignment',
           defaultValue: CrossAxisAlignment.start,
           type: PropType.fromData(data['crossAxisAlignment']),
         ),
-        super();
+        super(parent: parent);
 
   final Prop children, mainAxisSize, mainAxisAlignment, crossAxisAlignment;
 
   @override
   List<Prop> get props =>
-      [mainAxisSize, mainAxisAlignment, crossAxisAlignment, children];
+      [children, mainAxisSize, mainAxisAlignment, crossAxisAlignment];
 
   @override
   Row get widget => Row(
@@ -42,6 +45,7 @@ class RowBox extends MultiWidgetBox<Row> with ListViewLayoutProvider {
         mainAxisAlignment: mainAxisAlignment.value,
         crossAxisAlignment: crossAxisAlignment.value,
       );
+
   @override
-  String get boxType => 'Radius';
+  String get boxType => 'Row';
 }

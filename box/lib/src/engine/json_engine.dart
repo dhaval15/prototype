@@ -3,17 +3,18 @@ import 'package:box/src/box/box.dart';
 import 'package:box/src/mixins/mixins.dart';
 
 class JsonEngine {
-  BoxMixin decode(Map<String, dynamic> json, BoxGeneratorMixin generator) {
+  static BoxGeneratorMixin generator;
+  static BoxMixin decode(Map<String, dynamic> json) {
     final type = json['_type'];
     final box = generator.any(type)(json);
     return box;
   }
 
-  Map<String, dynamic> encode(BoxMixin box) {
+  static Map<String, dynamic> encode(BoxMixin box) {
     return _convert(box);
   }
 
-  dynamic _convert(BoxMixin box) {
+  static dynamic _convert(BoxMixin box) {
     if (box is CompositeBox) {
       final json = <String, dynamic>{
         '_type': box.boxType,
@@ -33,10 +34,9 @@ class JsonEngine {
     if (box is JsonMixin) return (box as JsonMixin).json;
     throw 'Unsupported Type ${box.runtimeType}';
   }
-
-  String _parameter(String label) => _camelCase(label);
 }
 
+String _parameter(String label) => _camelCase(label);
 bool _isPresent(PropMixin prop) => prop.type != null;
 bool _isChildNotNull(PropMixin prop) =>
     prop.box is ChildBox ? (prop.box as ChildBox).box != null : true;

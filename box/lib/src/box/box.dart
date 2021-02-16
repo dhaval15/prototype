@@ -7,3 +7,4 @@ export 'multi_box.dart';
 export 'scope_box.dart';
 export 'widget_box.dart';
 export 'children_box.dart';
+export 'abstract_box.dart';

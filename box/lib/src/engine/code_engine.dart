@@ -2,7 +2,7 @@ import 'package:box/src/box/box.dart';
 import 'package:box/src/mixins/mixins.dart';
 
 class CodeEngine {
-  String encode(BoxMixin box, {String className = 'Output'}) {
+  static String encode(BoxMixin box, {String className = 'Output'}) {
     return '''
 import 'package:flutter/material.dart';
 
@@ -15,7 +15,7 @@ class $className extends StatelessWidget {
 			''';
   }
 
-  String _convert(BoxMixin box) {
+  static String _convert(BoxMixin box) {
     if (box is CompositeBox)
       return box.boxType +
           '(' +
@@ -40,10 +40,9 @@ class $className extends StatelessWidget {
     if (box.value != null) return box.value.toString();
     return null;
   }
-
-  String _parameter(String label) => _camelCase(label) + ':';
 }
 
+String _parameter(String label) => _camelCase(label) + ':';
 bool _isPresent(PropMixin prop) => prop.type != null;
 bool _isChildNotNull(PropMixin prop) =>
     prop.box is ChildBox ? (prop.box as ChildBox).box != null : true;

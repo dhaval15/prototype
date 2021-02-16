@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:box/box.dart';
-import 'flutter_box.dart';
 
-class AlignmentBox extends CompositeBox<Alignment> with ComplexLayoutProvider {
+class AlignmentBox extends CompositeBox<Alignment> with RowLayoutProvider {
   AlignmentBox({data = const {}, MultiBox parent})
       : x = Prop(
           box: DoubleBox.dynamic(data: data['#0'] ?? 0),

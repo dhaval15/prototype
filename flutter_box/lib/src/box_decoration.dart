@@ -20,6 +20,11 @@ class BoxDecorationBox extends CompositeBox<BoxDecoration>
           name: 'Border',
           type: PropType.fromData(data['border']),
         ),
+        gradient = Prop(
+          box: RadialGradientBox(),
+          name: 'Gradient',
+          type: PropType.fromData(data['gradient']),
+        ),
         boxShadow = Prop<List<BoxShadow>>(
           box: MultiBox<BoxShadow>(
             data: data['boxShadow'] ?? [],
@@ -31,10 +36,10 @@ class BoxDecorationBox extends CompositeBox<BoxDecoration>
         ),
         super(parent: parent);
 
-  final Prop borderRadius, color, border, boxShadow;
+  final Prop borderRadius, color, border, boxShadow, gradient;
 
   @override
-  List<Prop> get props => [borderRadius, color, border, boxShadow];
+  List<Prop> get props => [borderRadius, color, border, boxShadow, gradient];
 
   @override
   BoxDecoration get value {
@@ -43,6 +48,7 @@ class BoxDecorationBox extends CompositeBox<BoxDecoration>
       color: color.value,
       border: border.value,
       boxShadow: boxShadow.value,
+      gradient: gradient.value,
     );
   }
 

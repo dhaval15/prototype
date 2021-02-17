@@ -53,12 +53,7 @@ abstract class AbstractBox<T> extends Lambda
 
   @override
   Widget buildEditor(Prop prop) {
-    return box.buildEditor(Prop(
-      name: prop.name,
-      box: box,
-      type: prop.type,
-      index: prop.index,
-    ));
+    return box.buildEditor(prop.copyWith(box: box));
   }
 
   @override

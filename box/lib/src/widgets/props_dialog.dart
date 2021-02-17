@@ -4,21 +4,29 @@ import 'package:flutter/material.dart';
 class PropsDialog extends StatelessWidget {
   final List<Prop> props;
 
-  const PropsDialog({Key key, this.props}) : super(key: key);
+  static Future<Prop> show(BuildContext context, List<Prop> props) {
+    if (props.isEmpty) return null;
+    return showDialog(
+        context: context,
+        builder: (context) => PropsDialog._(
+              props: props,
+            ));
+  }
+
+  const PropsDialog._({Key key, this.props}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: props.length,
-        itemBuilder: (BuildContext context, int index) => ListTile(
+    return SimpleDialog(
+      title: Text('Select a property to add'),
+      children: List.generate(props.length, (int index) {
+        return ListTile(
           title: Text(props[index].name),
           onTap: () {
-            props[index].enable();
-            Navigator.of(context).pop();
+            final prop = props[index];
+            Navigator.of(context).pop(prop);
           },
-        ),
-      ),
+        );
+      }),
     );
   }
 }

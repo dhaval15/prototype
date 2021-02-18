@@ -1,3 +1,4 @@
+import 'package:box/box.dart';
 import 'package:box/src/mixins/mixins.dart';
 import 'package:box/src/providers/providers.dart';
 import 'package:lambda/lambda.dart';
@@ -9,13 +10,18 @@ abstract class BaseMultiBox<T> extends Lambda
         ComplexLayoutProvider,
         ComplexEditorProvider {
   final ListSprinkle sprinkle;
-  final List<BoxMixin> boxes;
-  final BoxMixin Function(BoxMixin) onAdd;
+  final List<BoxMixin> boxes = [];
+  final BoxMixin Function(BoxMixin parent, [dynamic value]) onAdd;
   BaseMultiBox({List data, this.onAdd})
-      : this.boxes = List.from(data ?? []),
-        this.sprinkle = ListSprinkle(
-            data?.map((box) => box.sprinkle)?.toList()?.cast<Sprinkle>() ?? []),
-        super(null, null);
+      : this.sprinkle = ListSprinkle([]),
+        super(null, null) {
+    if (data != null && data.isNotEmpty) {
+      for (final item in data) {
+        final lambda = item is BoxMixin ? item : onAdd(this, item);
+        append(lambda: lambda);
+      }
+    }
+  }
 
   List<T> get value => sprinkle.last.isEmpty ? <T>[] : sprinkle.last.cast<T>();
 

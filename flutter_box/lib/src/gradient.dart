@@ -8,13 +8,9 @@ class LinearGradientBox extends CompositeBox<LinearGradient>
   LinearGradientBox({data = const {}})
       : colors = Prop(
           box: MultiBox(
-              data: data['colors'] ??
-                  [
-                    ColorBox.dynamic(data: Colors.white),
-                    ColorBox.dynamic(data: Colors.white),
-                  ],
-              onAdd: (parent) =>
-                  ColorBox.dynamic(data: Colors.white, parent: parent)),
+              data: data['colors'] ?? [Colors.white, Colors.white],
+              onAdd: (parent, [value]) =>
+                  ColorBox.dynamic(data: value ?? Colors.red, parent: parent)),
           name: 'Colors',
           type: PropType.value,
         ),
@@ -50,27 +46,34 @@ class RadialGradientBox extends CompositeBox<RadialGradient>
   RadialGradientBox({data = const {}})
       : colors = Prop(
           box: MultiBox(
-              data: data['colors'] ??
-                  [
-                    ColorBox.dynamic(data: Colors.white),
-                    ColorBox.dynamic(data: Colors.white),
-                  ],
-              onAdd: (parent) =>
-                  ColorBox.dynamic(data: Colors.white, parent: parent)),
+              data: data['colors'] ?? [Colors.white, Colors.white],
+              onAdd: (parent, [value]) => ColorBox.dynamic(
+                  data: value ?? Colors.white, parent: parent)),
           name: 'Colors',
+          type: PropType.value,
+        ),
+        begin = Prop(
+          box: AlignmentBox(data: data['begin'] ?? {}),
+          name: 'begin',
+          type: PropType.value,
+        ),
+        end = Prop(
+          box: AlignmentBox(data: data['end'] ?? {}),
+          name: 'end',
           type: PropType.value,
         ),
         super();
 
-  final Prop colors;
+  final Prop colors, begin, end;
 
   @override
-  List<Prop> get props => [colors];
+  List<Prop> get props => [colors, begin, end];
 
   @override
   RadialGradient get value => RadialGradient(
         colors: colors.value?.cast<Color>() ?? [],
       );
+
   @override
   String get boxType => 'RadialGradient';
 }

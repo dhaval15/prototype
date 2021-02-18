@@ -6,6 +6,7 @@ mixin ColorConverter implements ConverterMixin<Color> {
   Color convert(value) {
     if (value == null) return null;
     if (value is Color) return value;
+    if (value is int) return Color(value);
     if (value is String)
       try {
         return value.color;

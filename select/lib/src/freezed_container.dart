@@ -32,9 +32,9 @@ class FreezedContainerState extends State<FreezedContainer> {
   }
 
   void hibernate() {
-    // setState(() {
-    //   freezed = null;
-    // });
+    setState(() {
+      freezed = null;
+    });
   }
 
   @override

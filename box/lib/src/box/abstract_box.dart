@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:box/box.dart';
 import 'package:box/src/mixins/mixins.dart';
 import 'package:box/src/providers/providers.dart';
@@ -8,7 +10,7 @@ import 'package:lambda/lambda.dart';
 import 'boxes.dart';
 
 abstract class AbstractBox<T> extends Lambda
-    with BoxMixin<T>, ConverterMixin<T>, ComplexEditorProvider, PropsProvider {
+    with BoxMixin<T>, ConverterMixin<T>, AbstractEditorProvider, PropsProvider {
   final sprinkle = Sprinkle();
   final MultiBox parent;
 
@@ -26,7 +28,7 @@ abstract class AbstractBox<T> extends Lambda
 
   void setInherited(String type) {
     final json = JsonEngine.encode(box);
-    value = inheritedBuilder['type'](json);
+    value = inheritedBuilder[type](json);
   }
 
   Map<String, CompositeBox<T> Function(dynamic)> get inheritedBuilder;
@@ -49,11 +51,6 @@ abstract class AbstractBox<T> extends Lambda
   @override
   Widget buildField(value) {
     return box.buildField(value);
-  }
-
-  @override
-  Widget buildEditor(Prop prop) {
-    return box.buildEditor(prop.copyWith(box: box));
   }
 
   @override

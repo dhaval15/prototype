@@ -64,8 +64,8 @@ class _AbstractViewState extends State<AbstractView> {
                 itemBuilder: (text) => Text(text),
                 onChanged: (type) async {
                   box.setInherited(type);
-                  await Future.delayed(Duration(seconds: 1));
-                  widget.prop.key.currentState.redraw();
+                  await Future.delayed(Duration(milliseconds: 1));
+                  setState(() {});
                 },
               ),
             ),

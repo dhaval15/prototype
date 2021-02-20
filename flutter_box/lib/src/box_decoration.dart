@@ -21,14 +21,14 @@ class BoxDecorationBox extends CompositeBox<BoxDecoration>
           type: PropType.fromData(data['border']),
         ),
         gradient = Prop(
-          box: RadialGradientBox(),
+          box: GradientBox(),
           name: 'Gradient',
           type: PropType.fromData(data['gradient']),
         ),
         boxShadow = Prop<List<BoxShadow>>(
           box: MultiBox<BoxShadow>(
             data: data['boxShadow'] ?? [],
-            onAdd: (parent) => BoxShadowBox(parent: parent),
+            onAdd: (parent, [value]) => BoxShadowBox(parent: parent),
           ),
           name: 'BoxShadow',
           defaultValue: [],

@@ -6,11 +6,13 @@ import 'flutter_box.dart';
 class LinearGradientBox extends CompositeBox<LinearGradient>
     with ComplexLayoutProvider {
   LinearGradientBox({data = const {}})
-      : colors = Prop(
+      : colors = Prop<List<Color>>(
           box: MultiBox(
-              data: data['colors'] ?? [Colors.white, Colors.white],
-              onAdd: (parent, [value]) =>
-                  ColorBox.dynamic(data: value ?? Colors.red, parent: parent)),
+              data: data['colors'] ?? [Colors.red, Colors.yellow],
+              onAdd: (parent, [value]) => ColorBox.dynamic(
+                    data: value ?? Colors.white,
+                    parent: parent,
+                  )),
           name: 'Colors',
           type: PropType.value,
         ),
@@ -33,10 +35,11 @@ class LinearGradientBox extends CompositeBox<LinearGradient>
 
   @override
   LinearGradient get value => LinearGradient(
-        colors: colors.value?.cast<Color>() ?? [],
+        colors: colors.value,
         begin: begin.value,
         end: end.value,
       );
+
   @override
   String get boxType => 'LinearGradient';
 }
@@ -44,34 +47,27 @@ class LinearGradientBox extends CompositeBox<LinearGradient>
 class RadialGradientBox extends CompositeBox<RadialGradient>
     with ComplexLayoutProvider {
   RadialGradientBox({data = const {}})
-      : colors = Prop(
+      : colors = Prop<List<Color>>(
           box: MultiBox(
-              data: data['colors'] ?? [Colors.white, Colors.white],
-              onAdd: (parent, [value]) => ColorBox.dynamic(
-                  data: value ?? Colors.white, parent: parent)),
+            data: data['colors'] ?? [Colors.red, Colors.yellow],
+            onAdd: (parent, [value]) => ColorBox.dynamic(
+              data: value ?? Colors.white,
+              parent: parent,
+            ),
+          ),
           name: 'Colors',
-          type: PropType.value,
-        ),
-        begin = Prop(
-          box: AlignmentBox(data: data['begin'] ?? {}),
-          name: 'begin',
-          type: PropType.value,
-        ),
-        end = Prop(
-          box: AlignmentBox(data: data['end'] ?? {}),
-          name: 'end',
           type: PropType.value,
         ),
         super();
 
-  final Prop colors, begin, end;
+  final Prop colors;
 
   @override
-  List<Prop> get props => [colors, begin, end];
+  List<Prop> get props => [colors];
 
   @override
   RadialGradient get value => RadialGradient(
-        colors: colors.value?.cast<Color>() ?? [],
+        colors: colors.value,
       );
 
   @override
@@ -79,7 +75,7 @@ class RadialGradientBox extends CompositeBox<RadialGradient>
 }
 
 class GradientBox extends AbstractBox<Gradient> {
-  GradientBox() : super(LinearGradientBox());
+  GradientBox() : super(RadialGradientBox());
 
   @override
   String buildCode(boxMixin) {

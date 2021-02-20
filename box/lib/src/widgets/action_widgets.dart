@@ -96,7 +96,7 @@ class AddPropAction extends StatelessWidget {
         size: ICON_SIZE,
       ).padding(all: 6),
       onTap: () async {
-        final filteredProps = props.where((prop) => prop == null).toList();
+        final filteredProps = props.where((prop) => prop.type == null).toList();
         final prop = await PropsDialog.show(context, filteredProps);
         if (prop != null) {
           prop.enable();

@@ -12,7 +12,11 @@ const _SCOPE_CHECK = false;
 enum ActionEntry { Delete, Lambda, Scoped, Copy, Paste }
 
 mixin FieldExposerMixin<T> on PropMixin<T> {
-  Widget get field => box.buildField(value);
+  Widget get field {
+    print('Field Rebuild : ${box.runtimeType}');
+    return box.buildField(value);
+  }
+
   Widget get label => Text(name);
   List<Widget> get actions => [
         MenuAction(
@@ -21,11 +25,14 @@ mixin FieldExposerMixin<T> on PropMixin<T> {
         ),
       ];
 
-  Widget get editor => FreezedContainer(
-        key: key,
-        freezed: type == null,
-        field: box.buildEditor(this as Prop),
-      );
+  Widget get editor {
+    print('Editor Rebuild : ${box.runtimeType}');
+    return FreezedContainer(
+      key: key,
+      freezed: type == null,
+      field: box.buildEditor(this as Prop),
+    );
+  }
 
   void disable() {
     // if (false) throw 'Can not change field type';

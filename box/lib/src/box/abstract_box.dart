@@ -28,7 +28,9 @@ abstract class AbstractBox<T> extends Lambda
 
   void setInherited(String type) {
     final json = JsonEngine.encode(box);
-    value = inheritedBuilder[type](json);
+    final newBox = inheritedBuilder[type](json);
+    value = null;
+    value = newBox;
   }
 
   Map<String, CompositeBox<T> Function(dynamic)> get inheritedBuilder;
@@ -42,7 +44,7 @@ abstract class AbstractBox<T> extends Lambda
 
   set value(dynamic value) {
     update(value);
-    if (value is Widget)
+    if (value is T)
       box = null;
     else
       box = value;
@@ -61,12 +63,12 @@ abstract class AbstractBox<T> extends Lambda
   }
 
   void notify(dynamic value) {
-    boxedValue = convert(value);
+    boxedValue = box?.value ?? value;
     sprinkle.add(boxedValue);
   }
 
   @override
   T convert(value) {
-    return box?.value ?? value;
+    return value;
   }
 }

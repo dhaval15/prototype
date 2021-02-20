@@ -9,17 +9,15 @@ abstract class BaseMultiBox<T> extends Lambda
         BoxTypeMixin,
         ComplexLayoutProvider,
         ComplexEditorProvider {
-  final ListSprinkle sprinkle;
+  final ListSprinkle sprinkle = ListSprinkle([]);
   final List<BoxMixin> boxes = [];
   final BoxMixin Function(BoxMixin parent, [dynamic value]) onAdd;
-  BaseMultiBox({List data, this.onAdd})
-      : this.sprinkle = ListSprinkle([]),
-        super(null, null) {
+  BaseMultiBox({List data, this.onAdd}) : super(null, null) {
     if (data != null && data.isNotEmpty) {
-      for (final item in data) {
-        final lambda = item is BoxMixin ? item : onAdd(this, item);
-        append(lambda: lambda);
-      }
+      data.forEach((item) {
+        final box = onAdd(this, item);
+        boxes.add(box);
+      });
     }
   }
 
@@ -36,7 +34,7 @@ abstract class BaseMultiBox<T> extends Lambda
     sprinkle.append(box.sprinkle);
   }
 
-  void remove(BoxMixin box) async {
+  void remove(BoxMixin box) {
     (box as Lambda).kill();
     boxes.remove(box);
     sprinkle.remove(box.sprinkle);
@@ -44,8 +42,11 @@ abstract class BaseMultiBox<T> extends Lambda
   }
 
   Future execute() async {
-    for (final lambda in boxes) {
-      await lambda.execute();
+    for (final box in boxes) {
+      await box.execute();
+    }
+    for (final box in boxes) {
+      sprinkle.append(box.sprinkle);
     }
   }
 }

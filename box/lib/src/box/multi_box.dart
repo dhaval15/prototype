@@ -13,11 +13,18 @@ abstract class BaseMultiBox<T> extends Lambda
   final List<BoxMixin> boxes = [];
   final BoxMixin Function(BoxMixin parent, [dynamic value]) onAdd;
   BaseMultiBox({List data, this.onAdd}) : super(null, null) {
+    init(data);
+  }
+
+  void init(List data) async {
     if (data != null && data.isNotEmpty) {
-      data.forEach((item) {
+      for (final item in data) {
         final box = onAdd(this, item);
         boxes.add(box);
-      });
+        await box.execute();
+        sprinkle.append(box.sprinkle);
+      }
+      sprinkle.add(sprinkle.last);
     }
   }
 
@@ -42,11 +49,11 @@ abstract class BaseMultiBox<T> extends Lambda
   }
 
   Future execute() async {
-    for (final box in boxes) {
-      await box.execute();
-    }
-    for (final box in boxes) {
-      sprinkle.append(box.sprinkle);
-    }
+    // for (final box in boxes) {
+    //   await box.execute();
+    // }
+    // for (final box in boxes) {
+    //   sprinkle.append(box.sprinkle);
+    // }
   }
 }

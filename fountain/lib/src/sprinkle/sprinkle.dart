@@ -82,8 +82,10 @@ class ListSprinkle extends Sprinkle<List> {
   final List<BaseSprinkle> sprinkles;
 
   @override
-  List get _last => sprinkles.map((sprinkle) => sprinkle._last).toList()
-    ..removeWhere((value) => value == null);
+  List get _last => sprinkles
+      .map((sprinkle) => sprinkle._last)
+      .where((value) => value != null)
+      .toList();
 
   ListSprinkle(this.sprinkles) : super();
 

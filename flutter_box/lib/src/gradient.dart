@@ -19,12 +19,14 @@ class LinearGradientBox extends CompositeBox<LinearGradient>
         begin = Prop(
           box: AlignmentBox(data: data['begin'] ?? {}),
           name: 'begin',
-          type: PropType.value,
+          defaultValue: Alignment.centerLeft,
+          type: PropType.fromData(data['begin']),
         ),
         end = Prop(
           box: AlignmentBox(data: data['end'] ?? {}),
           name: 'end',
-          type: PropType.value,
+          defaultValue: Alignment.centerRight,
+          type: PropType.fromData(data['end']),
         ),
         super();
 
@@ -66,16 +68,19 @@ class RadialGradientBox extends CompositeBox<RadialGradient>
   List<Prop> get props => [colors];
 
   @override
-  RadialGradient get value => RadialGradient(
-        colors: colors.value,
-      );
+  RadialGradient get value {
+    return RadialGradient(
+      colors: colors.value,
+    );
+  }
 
   @override
   String get boxType => 'RadialGradient';
 }
 
 class GradientBox extends AbstractBox<Gradient> {
-  GradientBox() : super(RadialGradientBox());
+  GradientBox({data = const {}, MultiBox parent})
+      : super('Linear', data: data, parent: parent);
 
   @override
   String buildCode(boxMixin) {

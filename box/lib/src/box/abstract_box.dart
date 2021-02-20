@@ -14,9 +14,13 @@ abstract class AbstractBox<T> extends Lambda
   final sprinkle = Sprinkle();
   final MultiBox parent;
 
-  AbstractBox(this.box, {this.parent}) : super(CONST, [null]);
+  String currentType;
 
-  AbstractBox.value(value, {this.parent}) : super(CONST, [value]);
+  AbstractBox(String type, {dynamic data, this.parent})
+      : currentType = type,
+        super(CONST, [null]) {
+    box = inheritedBuilder[type](data);
+  }
 
   AbstractBox.dynamic({data, this.parent})
       : box = data is CompositeBox<T> ? data : null,
@@ -26,11 +30,13 @@ abstract class AbstractBox<T> extends Lambda
 
   CompositeBox<T> box;
 
-  void setInherited(String type) {
+  void setInherited(String type) async {
+    if (type == currentType) return;
     final json = JsonEngine.encode(box);
     final newBox = inheritedBuilder[type](json);
     value = null;
     value = newBox;
+    currentType = type;
   }
 
   Map<String, CompositeBox<T> Function(dynamic)> get inheritedBuilder;

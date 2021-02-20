@@ -57,8 +57,10 @@ class _AbstractViewState extends State<AbstractView> {
         Row(
           children: [
             widget.prop.label,
+            SizedBox(width: 8),
             Expanded(
               child: Dropdown<String>(
+                controller: ValueNotifier<String>(box.currentType),
                 items: box.inheritedTypes,
                 selectedItembuilder: (text) => Text(text),
                 itemBuilder: (text) => Text(text),

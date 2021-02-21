@@ -5,6 +5,7 @@ import 'package:extras/extras.dart';
 mixin ColorConverter implements ConverterMixin<Color> {
   Color convert(value) {
     if (value == null) return null;
+    if (value is MaterialColor) return Color(value.value);
     if (value is Color) return value;
     if (value is int) return Color(value);
     if (value is String)

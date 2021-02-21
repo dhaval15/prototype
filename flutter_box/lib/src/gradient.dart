@@ -80,7 +80,7 @@ class RadialGradientBox extends CompositeBox<RadialGradient>
 
 class GradientBox extends AbstractBox<Gradient> {
   GradientBox({data = const {}, MultiBox parent})
-      : super('Linear', data: data, parent: parent);
+      : super(data['_type'] ?? 'LinearGradient', data: data, parent: parent);
 
   @override
   String buildCode(boxMixin) {
@@ -90,7 +90,7 @@ class GradientBox extends AbstractBox<Gradient> {
   @override
   Map<String, CompositeBox<Gradient> Function(dynamic)> get inheritedBuilder =>
       {
-        'Linear': (data) => LinearGradientBox(data: data),
-        'Radial': (data) => RadialGradientBox(data: data),
+        'LinearGradient': (data) => LinearGradientBox(data: data),
+        'RadialGradient': (data) => RadialGradientBox(data: data),
       };
 }

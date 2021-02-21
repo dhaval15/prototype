@@ -34,6 +34,7 @@ class $className extends StatelessWidget {
               .join('') +
           ')';
     if (box is ChildBox) return _convert(box.box);
+    if (box is AbstractBox) return _convert(box.box);
     if (box is BaseMultiBox)
       return '[' + box.boxes.map((b) => _convert(b)).join(',') + ',]';
     if (box.value is String) return '\'${box.value}\'';

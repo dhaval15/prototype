@@ -28,7 +28,9 @@ class JsonEngine {
       return json;
     }
     if (box is ChildBox) return _convert(box.box);
+    if (box is AbstractBox) return _convert(box.box);
     if (box is BaseMultiBox) return box.boxes.map((b) => _convert(b)).toList();
+    if (box is RadiusBox) return box.value.x;
     if (box.value == null) return null;
     if (box is JsonMixin) return (box as JsonMixin).json;
     throw 'Unsupported Type ${box.runtimeType}';

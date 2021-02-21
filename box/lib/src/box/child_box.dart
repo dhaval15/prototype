@@ -22,8 +22,13 @@ abstract class BaseChildBox extends Lambda
   BaseChildBox.value(value, {this.parent}) : super(CONST, [value]);
 
   BaseChildBox.dynamic({data, this.parent})
-      : box = data is CompositeBox<Widget> ? data : null,
-        super(CONST, data is CompositeBox<Widget> ? [null] : [data]);
+      : box = data is CompositeBox<Widget>
+            ? data
+            : data is Map
+                ? ChildField.generator.widget(data['_type'])(data)
+                : null,
+        super(CONST,
+            data is CompositeBox<Widget> || data is Map ? [null] : [data]);
 
   Widget boxedValue;
 

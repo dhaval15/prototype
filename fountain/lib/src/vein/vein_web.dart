@@ -13,7 +13,7 @@ class Vein {
   }
 
   void remove(SubVein vein) {
-    vein.kill();
+    vein?.kill();
     _subVeins.remove(vein);
   }
 
@@ -23,7 +23,7 @@ class Vein {
 
   void kill() {
     for (final vein in _subVeins) {
-      vein.kill();
+      vein?.kill();
     }
   }
 }

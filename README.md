@@ -5,6 +5,7 @@ Prototyping Software for flutter developed in flutter
 ### Live Demo
 
 [Prototype here](https://dhaval15.github.io/prototype.io)
+This version will have some bugs, for full experience build on desktop.
 
 ### Folder Structure
 

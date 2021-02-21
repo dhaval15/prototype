@@ -1,18 +1,15 @@
+import 'package:feather/src/workspace/workspace.dart';
 import 'package:flutter/material.dart';
 
 class Statusline extends StatefulWidget {
-  final List<String> names;
-  final String current;
-  final void Function(String name) onWorkspaceChanged;
-  final void Function(String name) onAdd;
-  final Future<bool> Function(String name) onClose;
+  final List<Workspace> workspaces;
+  final int current;
+  final void Function(int index) onWorkspaceChanged;
 
   const Statusline({
-    this.names,
+    this.workspaces,
     this.onWorkspaceChanged,
     this.current,
-    this.onAdd,
-    this.onClose,
   });
 
   @override
@@ -20,32 +17,34 @@ class Statusline extends StatefulWidget {
 }
 
 class _StatuslineState extends State<Statusline> {
-  String _current;
+  int _currentIndex;
 
   @override
   void initState() {
     super.initState();
-    _current = widget.current;
+    _currentIndex = widget.current;
   }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        for (final name in widget.names)
+        for (int index = 0; index < widget.workspaces.length; index++)
           InkWell(
             child: Container(
-              color: name == _current ? Colors.red : Colors.white.withAlpha(20),
+              color: index == _currentIndex
+                  ? Colors.red
+                  : Colors.white.withAlpha(20),
               child: Row(
                 children: [
                   SizedBox(width: 8),
                   Padding(
                     padding: EdgeInsets.all(8),
-                    child: Text(name),
+                    child: Text(widget.workspaces[index].label),
                   ),
                   InkWell(
                     onTap: () {
-                      closeWorkspace(name);
+                      closeWorkspace(index);
                     },
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8),
@@ -59,9 +58,9 @@ class _StatuslineState extends State<Statusline> {
               ),
             ),
             onTap: () {
-              widget.onWorkspaceChanged(name);
+              widget.onWorkspaceChanged(index);
               setState(() {
-                _current = name;
+                _currentIndex = index;
               });
             },
           ),
@@ -75,37 +74,63 @@ class _StatuslineState extends State<Statusline> {
             ),
           ),
         ),
+        InkWell(
+          onTap: loadWorkspace,
+          child: Padding(
+            padding: EdgeInsets.all(8),
+            child: Icon(
+              Icons.upload_file,
+              size: 18,
+            ),
+          ),
+        ),
       ],
     );
+  }
+
+  void loadWorkspace() async {
+    final workspace = await Workspace.load();
+    final name = workspace.label;
+    if (name != null) {
+      widget.workspaces.add(workspace);
+      widget.onWorkspaceChanged(widget.workspaces.length - 1);
+      setState(() {
+        _currentIndex = widget.workspaces.length - 1;
+      });
+    }
   }
 
   void addWorkspace() async {
     final name = await showDialog(
         context: context, builder: (context) => AskNameDialog());
-    if (name != null && !widget.names.contains(name)) {
-      widget.onAdd(name);
+    if (name != null) {
+      final workspace = Workspace.create(name);
+      widget.workspaces.add(workspace);
+      widget.onWorkspaceChanged(widget.workspaces.length - 1);
       setState(() {
-        widget.names.add(name);
-        _current = name;
+        _currentIndex = widget.workspaces.length - 1;
       });
     }
   }
 
-  void closeWorkspace(String name) async {
-    final result = await widget.onClose(name);
+  void closeWorkspace(int index) async {
+    final result = await onClose();
     if (result) {
       setState(() {
-        final index = widget.names.indexOf(name);
-        widget.names.removeAt(index);
-        if (_current == name) {
+        widget.workspaces.removeAt(index);
+        if (_currentIndex == index) {
           if (index - 1 < 0)
-            _current = widget.names[index];
+            _currentIndex = index;
           else
-            _current = widget.names[index - 1];
-          widget.onWorkspaceChanged(_current);
+            _currentIndex = index - 1;
+          widget.onWorkspaceChanged(_currentIndex);
         }
       });
     }
+  }
+
+  Future<bool> onClose() async {
+    return widget.workspaces.length > 1;
   }
 }
 

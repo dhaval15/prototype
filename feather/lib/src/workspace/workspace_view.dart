@@ -4,11 +4,15 @@ import 'statusline.dart';
 import 'workspace.dart';
 
 class WorkspaceView extends StatefulWidget {
-  final List<Workspace> workspaces = [
-    Workspace.create('Default'),
-  ];
+  final List<Workspace> workspaces;
 
-  final int currentWorkspace = 0;
+  final int currentWorkspace;
+
+  WorkspaceView({
+    List<Workspace> workspaces,
+    this.currentWorkspace = 0,
+  }) : this.workspaces = workspaces ?? [Workspace.create('Default')];
+
   @override
   _WorkspaceViewState createState() => _WorkspaceViewState();
 }
@@ -43,24 +47,10 @@ class _WorkspaceViewState extends State<WorkspaceView> {
             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
           ),
           Statusline(
-            names:
-                widget.workspaces.map((workspace) => workspace.label).toList(),
-            current: widget.workspaces[_currentWorkspace].label,
-            onAdd: (name) {
-              widget.workspaces.add(Workspace.create(name));
-              _controller.jumpToPage(widget.workspaces.length - 1);
-            },
-            onClose: (name) async {
-              if (widget.workspaces.length > 1) {
-                widget.workspaces
-                    .removeWhere((workspace) => workspace.label == name);
-                return true;
-              } else
-                return false;
-            },
-            onWorkspaceChanged: (name) {
-              _controller.jumpToPage(widget.workspaces
-                  .indexWhere((workspace) => workspace.label == name));
+            workspaces: widget.workspaces,
+            current: 0,
+            onWorkspaceChanged: (index) {
+              _controller.jumpToPage(index);
             },
           ),
         ],

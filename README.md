@@ -17,6 +17,7 @@ Prototyping Software for flutter developed in flutter
 - **flutter_box** : This package includes box versions of flutter widgets and components.
 - **builder** : It is a utility for generating a box version of flutter component.
 - **extras** : Some extra utilities.
+- **file_utils** : This package wraps file utilities which support both web and native.
 
 ### Features
 

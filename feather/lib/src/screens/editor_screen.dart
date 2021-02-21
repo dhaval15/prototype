@@ -53,7 +53,7 @@ class _EditorScreenState extends State<EditorScreen>
               ActionWidget(
                 icon: Icons.save,
                 onTap: () {
-                  Framework.saveAsJson(box);
+                  Framework.saveAsJson(box, widget.label);
                 },
               ),
               ActionWidget(

@@ -32,6 +32,8 @@ dependencies:
     path: ../flutter_box
   extras:
     path: ../extras
+  file_utils:
+    path: ../file_utils
   flutter:
     sdk: flutter
 

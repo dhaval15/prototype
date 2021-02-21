@@ -21,7 +21,7 @@ class BoxDecorationBox extends CompositeBox<BoxDecoration>
           type: PropType.fromData(data['border']),
         ),
         gradient = Prop(
-          box: GradientBox(),
+          box: GradientBox(data: data['gradient'] ?? {}),
           name: 'Gradient',
           type: PropType.fromData(data['gradient']),
         ),

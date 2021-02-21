@@ -101,10 +101,11 @@ class WidgetsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final widgets = ChildField.generator.widgets;
-    return Dialog(
-      child: ListView.builder(
-        itemCount: widgets.length,
-        itemBuilder: (context, index) {
+    return SimpleDialog(
+      title: Text('Pick a Widget'),
+      children: List.generate(
+        widgets.length,
+        (index) {
           final name = widgets[index];
           return ListTile(
             title: Text(name),

@@ -60,7 +60,7 @@ class Lambda<T> {
 
   void kill() {
     executor.kill();
-    params.kill();
+    params?.kill();
   }
 
   Lambda operator -() => Lambda.value(0) - this;

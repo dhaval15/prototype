@@ -22,9 +22,9 @@ abstract class PropType {
       if (data['_type'] == 'Scoped')
         return scoped(data['value']);
       else if (data['_type'] == 'Lambda') return lambda(data['value']);
-      return value;
+      return PropType.value;
     } else
-      return value;
+      return PropType.value;
   }
 }
 

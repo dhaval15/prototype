@@ -85,12 +85,13 @@ class EditContext {
     return false;
   }
 
-  Widget buildAddPropsDialog() => PropsDialog(
-        props: currentBox.props.where((prop) => prop.type == null).toList(),
-      );
-
-  Future showAddPropsDialog(BuildContext context) =>
-      showDialog(context: context, builder: (context) => buildAddPropsDialog());
+  Future showAddPropsDialog(BuildContext context) async {
+    final prop = await PropsDialog.show(
+      context,
+      currentBox.props.where((prop) => prop.type == null).toList(),
+    );
+    prop.enable();
+  }
 
   void dispose() {
     _editorController.close();

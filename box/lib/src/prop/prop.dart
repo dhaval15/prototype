@@ -26,6 +26,21 @@ class Prop<T> extends PropMixin<T>
     this.index,
   });
 
+  Prop<T> copyWith({
+    BoxMixin<T> box,
+    T defaultValue,
+    String name,
+    PropType type,
+    int index,
+  }) =>
+      Prop(
+        box: box ?? this.box,
+        defaultValue: defaultValue ?? this.defaultValue,
+        name: name ?? this.name,
+        type: type ?? this.type,
+        index: index ?? this.index,
+      );
+
   factory Prop.onlyBox(BoxMixin box, {String name}) => Prop(
         box: box,
         name: name ?? '',

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:box/box.dart';
 
 class BoxShadowBox extends CompositeBox<BoxShadow> with ColumnLayoutMixin {
   BoxShadowBox([data = const {}])

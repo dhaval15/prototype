@@ -33,6 +33,55 @@ mixin ComplexEditorProvider implements EditorProvider {
   Widget buildEditor(Prop prop) => ComplexView(prop: prop);
 }
 
+mixin AbstractEditorProvider implements EditorProvider {
+  @override
+  Widget buildEditor(Prop prop) => AbstractView(prop: prop);
+}
+
+class AbstractView extends StatefulWidget {
+  final Prop prop;
+
+  const AbstractView({Key key, this.prop}) : super(key: key);
+
+  @override
+  _AbstractViewState createState() => _AbstractViewState();
+}
+
+class _AbstractViewState extends State<AbstractView> {
+  @override
+  Widget build(BuildContext context) {
+    final box = widget.prop.box as AbstractBox;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          children: [
+            widget.prop.label,
+            SizedBox(width: 8),
+            Expanded(
+              child: Dropdown<String>(
+                controller: ValueNotifier<String>(box.currentType),
+                items: box.inheritedTypes,
+                selectedItembuilder: (text) => Text(text),
+                itemBuilder: (text) => Text(text),
+                onChanged: (type) async {
+                  box.setInherited(type);
+                  await Future.delayed(Duration(milliseconds: 1));
+                  setState(() {});
+                },
+              ),
+            ),
+            AddPropAction(box.props),
+            ...widget.prop.actions,
+          ],
+        ),
+        Divider(),
+        widget.prop.field.padding(left: 8),
+      ],
+    );
+  }
+}
+
 class ComplexView extends StatefulWidget {
   final Prop prop;
 
@@ -69,11 +118,6 @@ class _ComplexViewState extends State<ComplexView> {
     setState(() {});
   }
 }
-
-// class ScopeEditorProvider implements EditorProvider {
-//   @override
-//   Widget buildEditor(Prop prop) => ScopeView(prop: prop);
-// }
 
 class ScopeView extends StatefulWidget {
   final Prop prop;

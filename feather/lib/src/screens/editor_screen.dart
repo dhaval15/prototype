@@ -7,11 +7,13 @@ import 'package:extras/extras.dart';
 class EditorScreen extends StatefulWidget {
   final Color backgroundColor;
   final String label;
+  final WidgetBox box;
 
   EditorScreen({
     Key key,
     this.backgroundColor,
     this.label,
+    this.box,
   }) : super(key: key);
 
   @override
@@ -20,7 +22,12 @@ class EditorScreen extends StatefulWidget {
 
 class _EditorScreenState extends State<EditorScreen>
     with AutomaticKeepAliveClientMixin {
-  final ContainerBox box = ContainerBox();
+  WidgetBox box;
+  @override
+  void initState() {
+    super.initState();
+    box = widget.box ?? ContainerBox();
+  }
 
   @override
   Widget build(BuildContext context) {

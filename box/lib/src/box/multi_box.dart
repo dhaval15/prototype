@@ -1,3 +1,4 @@
+import 'package:box/box.dart';
 import 'package:box/src/mixins/mixins.dart';
 import 'package:box/src/providers/providers.dart';
 import 'package:lambda/lambda.dart';
@@ -8,14 +9,24 @@ abstract class BaseMultiBox<T> extends Lambda
         BoxTypeMixin,
         ComplexLayoutProvider,
         ComplexEditorProvider {
-  final ListSprinkle sprinkle;
-  final List<BoxMixin> boxes;
-  final BoxMixin Function(BoxMixin) onAdd;
-  BaseMultiBox({List data, this.onAdd})
-      : this.boxes = List.from(data ?? []),
-        this.sprinkle = ListSprinkle(
-            data?.map((box) => box.sprinkle)?.toList()?.cast<Sprinkle>() ?? []),
-        super(null, null);
+  final ListSprinkle sprinkle = ListSprinkle([]);
+  final List<BoxMixin> boxes = [];
+  final BoxMixin Function(BoxMixin parent, [dynamic value]) onAdd;
+  BaseMultiBox({List data, this.onAdd}) : super(null, null) {
+    init(data);
+  }
+
+  void init(List data) async {
+    if (data != null && data.isNotEmpty) {
+      for (final item in data) {
+        final box = onAdd(this, item);
+        boxes.add(box);
+        await box.execute();
+        sprinkle.append(box.sprinkle);
+      }
+      sprinkle.add(sprinkle.last);
+    }
+  }
 
   List<T> get value => sprinkle.last.isEmpty ? <T>[] : sprinkle.last.cast<T>();
 
@@ -30,7 +41,7 @@ abstract class BaseMultiBox<T> extends Lambda
     sprinkle.append(box.sprinkle);
   }
 
-  void remove(BoxMixin box) async {
+  void remove(BoxMixin box) {
     (box as Lambda).kill();
     boxes.remove(box);
     sprinkle.remove(box.sprinkle);
@@ -38,8 +49,11 @@ abstract class BaseMultiBox<T> extends Lambda
   }
 
   Future execute() async {
-    for (final lambda in boxes) {
-      await lambda.execute();
-    }
+    // for (final box in boxes) {
+    //   await box.execute();
+    // }
+    // for (final box in boxes) {
+    //   sprinkle.append(box.sprinkle);
+    // }
   }
 }

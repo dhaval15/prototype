@@ -4,7 +4,7 @@ Future _init() async {
   await Vein.init();
   ChildField.generator = BoxRegistery.instance;
   ScopeBox.generator = BoxRegistery.instance;
-  // JsonEngine.registry = BoxRegistery.instance.any;
+  JsonEngine.generator = BoxRegistery.instance;
   BoxRegistery.instance.registerManyWidgets({
     'Container': ([Map<String, dynamic> data = const {}]) =>
         ContainerBox(data: data),
@@ -33,9 +33,8 @@ Future _init() async {
 }
 
 String _generateCode(BoxMixin box, {String label = 'Output'}) =>
-    CodeEngine().encode(box, className: label);
+    CodeEngine.encode(box, className: label);
 
-Map<String, dynamic> _generateJson(BoxMixin box) => JsonEngine().encode(box);
+Map<String, dynamic> _generateJson(BoxMixin box) => JsonEngine.encode(box);
 
-BoxMixin _loadBoxFromJson(Map<String, dynamic> json) =>
-    JsonEngine().decode(json, BoxRegistery.instance);
+BoxMixin _loadBoxFromJson(Map<String, dynamic> json) => JsonEngine.decode(json);

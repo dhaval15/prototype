@@ -87,21 +87,20 @@ class AddPropAction extends StatelessWidget {
   final List<Prop> props;
 
   const AddPropAction(this.props);
+
   @override
   Widget build(BuildContext context) {
-    final filteredProps = props.where((prop) => prop.type == null).toList();
     return GestureDetector(
       child: Icon(
         Icons.add,
         size: ICON_SIZE,
       ).padding(all: 6),
-      onTap: () {
-        showDialog(
-          context: context,
-          builder: (context) => PropsDialog(
-            props: filteredProps,
-          ),
-        );
+      onTap: () async {
+        final filteredProps = props.where((prop) => prop.type == null).toList();
+        final prop = await PropsDialog.show(context, filteredProps);
+        if (prop != null) {
+          prop.enable();
+        }
       },
     );
   }

@@ -25,7 +25,7 @@ class _TreeViewState extends State<TreeView> {
         ).topRight(),
         Padding(
           padding: EdgeInsets.all(4),
-          child: NodeView(node: buildNode(widget.box)),
+          child: NodeView(node: buildNode(widget.box, [0])),
         )
       ],
     );
@@ -34,12 +34,13 @@ class _TreeViewState extends State<TreeView> {
 
 class Node {
   final String value;
+  final List<int> indices;
   final List<Node> nodes;
 
-  Node(this.value, this.nodes);
+  Node(this.value, this.nodes, this.indices);
 }
 
-Node buildNode(WidgetBox box) {
+Node buildNode(WidgetBox box, List<int> indices) {
   final value = box.boxType;
   if (box is MultiWidgetBox) {
     final childrenNodes = (box.children.box as MultiBox)
@@ -47,17 +48,17 @@ Node buildNode(WidgetBox box) {
         .map((box) => box as ChildBox)
         .map((box) => box.box)
         .where((box) => box != null)
-        .map((box) => buildNode(box))
+        .mapIndexed((index, box) => buildNode(box, [...indices, index]))
         .toList();
-    return Node(value, childrenNodes);
+    return Node(value, childrenNodes, indices);
   } else {
     final childrenNodes = box.props
         .where((prop) => prop.box is ChildBox)
         .map((prop) => (prop.box as ChildBox).box)
         .where((box) => box != null)
-        .map((box) => buildNode(box))
+        .mapIndexed((index, box) => buildNode(box, [...indices, index]))
         .toList();
-    return Node(value, childrenNodes);
+    return Node(value, childrenNodes, indices);
   }
 }
 
@@ -70,9 +71,14 @@ class NodeView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          node.value,
-          style: TextStyle(fontSize: 18),
+        GestureDetector(
+          onTap: () {
+            EditContextProvider.of(context).jump(node.indices);
+          },
+          child: Text(
+            node.value,
+            style: TextStyle(fontSize: 18),
+          ),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,5 +86,17 @@ class NodeView extends StatelessWidget {
         ).padding(left: 8),
       ],
     );
+  }
+}
+
+extension<T> on Iterable<T> {
+  List<R> mapIndexed<R>(R Function(int index, T) f) {
+    final List<R> list = [];
+    final iterator = this.iterator;
+    for (int index = 0; index < this.length; index++) {
+      iterator.moveNext();
+      list.add(f(index, iterator.current));
+    }
+    return list;
   }
 }

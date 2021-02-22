@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:box/box.dart';
-import 'flutter_box.dart';
 
 class ColumnBox extends MultiWidgetBox<Column> with ListViewLayoutProvider {
   ColumnBox({data = const {}, MultiBox parent})

@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'boxes.dart';
 
 class ChildrenBox extends MultiBox<Widget> {
-  ChildrenBox({List<ChildBox> data})
+  ChildrenBox({List data})
       : super(
             data: data,
-            onAdd: (parent, [value]) => ChildBox.value(value, parent: parent));
+            onAdd: (parent, [value]) =>
+                ChildBox.dynamic(data: value, parent: parent));
 
   @override
   String get boxType => 'Children';

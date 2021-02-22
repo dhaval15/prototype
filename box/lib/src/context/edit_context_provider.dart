@@ -73,6 +73,79 @@ class EditContext {
     _editorController.add(prop.field);
   }
 
+  void jump(List<int> indices) {
+    print('Intial State : ${_list.length} : $indices');
+    if (indices.length >= _list.length) {
+      _forward(indices);
+    } else
+      _backward(_list.length - indices.length, indices.last);
+  }
+
+  void _sideward(int index) {
+    if (_list.length == 1) {
+      (_list.last.box as WidgetBox).enableGuideline();
+      _editorController.add(_list.last.field);
+    } else {
+      (_list.removeLast().box as WidgetBox).disableGuideline();
+      final parent = _list.last;
+      WidgetBox next = parent.box;
+      _list.add(parent);
+      final children = <WidgetBox>[
+        ...next.props
+            .where((prop) => prop.box is ChildBox)
+            .map((prop) => (prop.box as ChildBox).box),
+        ...next.props
+            .where((prop) => prop.box is ChildrenBox)
+            .map((prop) => (prop.box as ChildrenBox)
+                .boxes
+                .map((box) => (box as ChildBox).box))
+            .fold([], (sum, list) => [...sum, ...list])
+      ];
+      next = children[index];
+      _list.add(Prop.onlyBox(next));
+      next.enableGuideline();
+      _editorController.add(_list.last.field);
+    }
+  }
+
+  void _forward(List<int> indices) {
+    final forwardJump = indices.sublist(1);
+    final parent = _list.first;
+    (_list.last.box as WidgetBox).disableGuideline();
+    _list.clear();
+    _list.add(parent);
+    WidgetBox next = parent.box;
+    for (int index in forwardJump) {
+      final children = <WidgetBox>[
+        ...next.props
+            .where((prop) => prop.box is ChildBox)
+            .map((prop) => (prop.box as ChildBox).box),
+        ...next.props
+            .where((prop) => prop.box is ChildrenBox)
+            .map((prop) => (prop.box as ChildrenBox)
+                .boxes
+                .map((box) => (box as ChildBox).box))
+            .fold([], (sum, list) => [...sum, ...list])
+      ];
+      next = children[index];
+      _list.add(Prop.onlyBox(next));
+    }
+    next.enableGuideline();
+    _editorController.add(_list.last.field);
+  }
+
+  void _backward(int back, int side) {
+    for (int i = 0; i < back; i++) {
+      if (_list.length != 1) {
+        final last = _list.removeLast().box;
+        if (last is WidgetBox) {
+          last.disableGuideline();
+        }
+      }
+    }
+    _sideward(side);
+  }
+
   bool back() {
     if (_list.length <= 1) return true;
     final last = _list.removeLast().box;

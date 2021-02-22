@@ -19,9 +19,9 @@ class Prop<T> extends PropMixin<T>
   PropType type;
 
   Prop({
-    this.box,
+    @required this.box,
     this.defaultValue,
-    this.name,
+    @required this.name,
     this.type,
     this.index,
   });

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:box/box.dart';
 import 'package:box/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:select/select.dart';
 
 class EditContextProvider extends StatefulWidget {
   final Widget child;
@@ -52,6 +53,50 @@ class EditContext {
 
   void updateTree() {
     _treeController.add(0);
+  }
+
+  void drop() {
+    if (_list.length > 1) {
+      final child = _list.removeLast().box as WidgetBox;
+      final parent = _list.last.box as WidgetBox;
+      final childProp = child.props.firstWhere((prop) => prop.box is ChildBox);
+      final parentBox = parent.props.firstWhere((prop) => prop.box is ChildBox);
+      final json = JsonEngine.encode(childProp.box);
+      final newBox = JsonEngine.decode(json);
+      parentBox.box.value = null;
+      parentBox.box.value = newBox;
+      updateTree();
+      _editorController.add(_list.last.field);
+    }
+  }
+
+  void wrap(BuildContext context) async {
+    if (_list.length > 1) {
+      final child = _list.removeLast();
+      final parent = _list.last.box as WidgetBox;
+      final parentBox = parent.props.firstWhere((prop) => prop.box is ChildBox);
+      parentBox.box.value = null;
+      final wrappedBox = await _newWrappedBox(context, child);
+      _list.add(Prop.onlyBox(wrappedBox));
+      parentBox.box.value = wrappedBox;
+      updateTree();
+      _editorController.add(_list.last.field);
+    }
+  }
+
+  Future<WidgetBox> _newWrappedBox(BuildContext context, Prop prop) async {
+    final type = await WidgetsDialog.show(context);
+    if (type != null) {
+      WidgetBox newBox = ChildField.generator.widget(type)();
+      await newBox.execute();
+      final childBox = newBox.props
+          .firstWhere((prop) => prop.box is ChildBox)
+          .box as ChildBox;
+      childBox.box = JsonEngine.copy(prop.box);
+      print(JsonEngine.encode(newBox));
+      return JsonEngine.copy(newBox);
+    }
+    return null;
   }
 
   T findAncestorBoxOfType<T>() {

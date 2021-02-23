@@ -63,10 +63,7 @@ class _ChildFieldState extends State<ChildField> {
             ),
             onTap: () async {
               if (widget.child.value == null) {
-                final type = await showDialog(
-                  context: context,
-                  builder: (context) => WidgetsDialog(),
-                );
+                final type = await WidgetsDialog.show(context);
                 if (type != null) {
                   final box = ChildField.generator.widget(type)();
                   setState(() {
@@ -98,6 +95,11 @@ class _ChildFieldState extends State<ChildField> {
 }
 
 class WidgetsDialog extends StatelessWidget {
+  static Future<String> show(BuildContext context) => showDialog(
+        context: context,
+        builder: (context) => WidgetsDialog(),
+      );
+
   @override
   Widget build(BuildContext context) {
     final widgets = ChildField.generator.widgets;

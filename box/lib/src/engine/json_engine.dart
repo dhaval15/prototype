@@ -14,6 +14,10 @@ class JsonEngine {
     return _convert(box);
   }
 
+  static T copy<T extends BoxMixin>(T box) {
+    return decode(encode(box));
+  }
+
   static dynamic _convert(BoxMixin box) {
     if (box is CompositeBox) {
       final json = <String, dynamic>{
@@ -30,8 +34,8 @@ class JsonEngine {
     if (box is ChildBox) return _convert(box.box);
     if (box is AbstractBox) return _convert(box.box);
     if (box is BaseMultiBox) return box.boxes.map((b) => _convert(b)).toList();
-    if (box is RadiusBox) return box.value.x;
     if (box.value == null) return null;
+    if (box is RadiusBox) return box.value.x;
     if (box is JsonMixin) return (box as JsonMixin).json;
     throw 'Unsupported Type ${box.runtimeType}';
   }

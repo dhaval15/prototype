@@ -1,5 +1,6 @@
 import 'package:box/src/box/box.dart';
 import 'package:box/src/context/context.dart';
+import 'package:box/src/engine/engine.dart';
 import 'package:box/src/mixins/mixins.dart';
 import 'package:box/src/prop/prop.dart';
 import 'package:box/src/widgets/widgets.dart';
@@ -9,7 +10,14 @@ import 'package:select/select.dart';
 
 const _SCOPE_CHECK = false;
 
-enum ActionEntry { Delete, Lambda, Scoped, Copy, Paste }
+enum ActionEntry {
+  Delete,
+  Lambda,
+  Scoped,
+  Copy,
+  Paste,
+  Drop,
+}
 
 mixin FieldExposerMixin<T> on PropMixin<T> {
   Widget get field {
@@ -48,6 +56,17 @@ mixin FieldExposerMixin<T> on PropMixin<T> {
     box.redraw();
   }
 
+  void dropBox(BuildContext context) {
+    if (box is ChildBox) {
+      final childBox = box as ChildBox;
+      final prop =
+          childBox.box.props.firstWhere((prop) => prop.box is ChildBox);
+      childBox.value = null;
+      childBox.value = JsonEngine.copy(prop.box);
+      EditContextProvider.of(context).updateTree();
+    }
+  }
+
   void _onMenuEntrySelected(BuildContext context, ActionEntry entry) {
     switch (entry) {
       case ActionEntry.Delete:
@@ -66,6 +85,9 @@ mixin FieldExposerMixin<T> on PropMixin<T> {
         break;
       case ActionEntry.Paste:
         (this as ClipboardMixin).paste(context);
+        break;
+      case ActionEntry.Drop:
+        dropBox(context);
         break;
     }
   }
@@ -127,6 +149,7 @@ mixin ValueExposerMixin<T> on PropMixin<T> {
   }
 
   onScopeVariableRemoved(String variableName) {}
+
   onLambdaSelected(Lambda lambda) {
     box.value = lambda;
     type = PropType.lambda(lambda);

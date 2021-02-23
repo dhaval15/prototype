@@ -85,7 +85,6 @@ class _EditorScreenState extends State<EditorScreen>
               builder: (context, snapshot) => Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       InkWell(
@@ -94,7 +93,23 @@ class _EditorScreenState extends State<EditorScreen>
                         },
                         child: Icon(Icons.arrow_back),
                       ),
+                      SizedBox(width: 12),
                       Text('Properties', style: context.subtitle1),
+                      Expanded(
+                        child: SizedBox(),
+                      ),
+                      ActionWidget(
+                        icon: Icons.wrap_text,
+                        onTap: () {
+                          EditContext.of(context).wrap(context);
+                        },
+                      ),
+                      ActionWidget(
+                        icon: Icons.delete,
+                        onTap: () {
+                          EditContext.of(context).drop();
+                        },
+                      ),
                       ActionWidget(
                         icon: Icons.add,
                         onTap: () {

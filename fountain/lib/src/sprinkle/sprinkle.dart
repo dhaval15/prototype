@@ -102,6 +102,7 @@ class ListSprinkle extends Sprinkle<List> {
 
   void append(SprinkleListener sprinkle) {
     sprinkles.add(sprinkle);
+    notify();
     sprinkle.listen((value) {
       notify();
     });

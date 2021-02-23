@@ -24,7 +24,6 @@ abstract class BaseMultiBox<T> extends Lambda
         await box.execute();
         sprinkle.append(box.sprinkle);
       }
-      sprinkle.add(sprinkle.last);
     }
   }
 

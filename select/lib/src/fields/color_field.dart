@@ -53,55 +53,6 @@ class _ColorFieldState extends State<ColorField> {
     );
   }
 
-  Future _onEdit(BuildContext context) => showDialog(
-        context: context,
-        child: _ColorPickerDialog(
-          color: value ?? Colors.white,
-        ),
-      );
-}
-
-class _ColorPickerDialog extends StatefulWidget {
-  final Color color;
-
-  const _ColorPickerDialog({Key key, this.color = Colors.white})
-      : super(key: key);
-
-  @override
-  __ColorPickerDialogState createState() => __ColorPickerDialogState();
-}
-
-class __ColorPickerDialogState extends State<_ColorPickerDialog> {
-  Color _color;
-
-  @override
-  void initState() {
-    super.initState();
-    _color = widget.color;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Pick a color!'),
-      content: SingleChildScrollView(
-        child: ColorPicker(
-          pickerColor: _color,
-          onColorChanged: (color) {
-            _color = color;
-          },
-          showLabel: true,
-          pickerAreaHeightPercent: 0.8,
-        ),
-      ),
-      actions: <Widget>[
-        FlatButton(
-          child: const Text('Select'),
-          onPressed: () {
-            Navigator.of(context).pop(_color);
-          },
-        ),
-      ],
-    );
-  }
+  Future _onEdit(BuildContext context) =>
+      ColorPickerDialog.show(context, color: value);
 }

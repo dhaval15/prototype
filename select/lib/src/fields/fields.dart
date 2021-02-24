@@ -3,6 +3,7 @@ import 'package:extras/extras.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:select/src/widgets/color_picker.dart';
 
 part 'string_field.dart';
 part 'int_field.dart';

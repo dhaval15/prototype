@@ -1,3 +1,4 @@
+import 'package:box/box.dart';
 import 'package:box/src/context/context.dart';
 import 'package:box/src/mixins/mixins.dart';
 import 'package:box/src/prop/prop.dart';
@@ -108,10 +109,13 @@ mixin ChildFieldProvider on BaseChildBox
           if (value is ChildAddEvent) {
             EditContextProvider.of(value.context).current = Prop.onlyBox(box);
             EditContextProvider.of(value.context).updateTree();
+            Tree.of(value.context).onEvent(AddNodeEvent(this));
           } else if (value is ChildToEvent) {
             EditContextProvider.of(value.context).current = Prop.onlyBox(box);
+            Tree.of(value.context).moveByValue(this);
           } else if (value is ChildDeleteEvent) {
             EditContextProvider.of(value.context).updateTree();
+            Tree.of(value.context).onEvent(RemoveNodeEvent(this));
           }
         },
       ).restrict(height: FIELD_HEIGHT);

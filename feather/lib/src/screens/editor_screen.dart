@@ -33,99 +33,109 @@ class _EditorScreenState extends State<EditorScreen>
   Widget build(BuildContext context) {
     super.build(context);
     final backgroundColor = this.widget.backgroundColor ?? context.canvas;
-    return EditContextProvider(
-      child: BoxRenderView(
-        box: box,
-        builder: (context, viewStream, editorStream, treeStream) =>
-            PrototypeScaffold(
-          backgroundColor: backgroundColor,
-          title: 'Feather',
-          tree: SizedBox(
-            width: 240,
-            height: context.height,
-            child: StreamBuilder<int>(
-              builder: (context, snapshot) => Framework.buildTree(box),
-              stream: treeStream,
+    return TreeProvider(
+      box: box,
+      child: EditContextProvider(
+        child: BoxRenderView(
+          box: box,
+          builder: (context, viewStream, editorStream, treeStream) =>
+              PrototypeScaffold(
+            backgroundColor: backgroundColor,
+            title: 'Feather',
+            tree: SizedBox(
+              width: 240,
+              height: context.height,
+              child: StreamBuilder<Tree>(
+                builder: (context, snapshot) => snapshot.hasData
+                    ? TreeWidget(
+                        tree: snapshot.data,
+                      )
+                    : Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                stream: Tree.of(context).treeStream,
+              ),
             ),
-          ),
-          view: ViewContainer(
-            actions: [
-              ActionWidget(
-                icon: Icons.print,
-                onTap: () {
-                  Framework.debugTree(box);
-                },
+            view: ViewContainer(
+              actions: [
+                ActionWidget(
+                  icon: Icons.print,
+                  onTap: () {
+                    Framework.debugTree(box);
+                  },
+                ),
+                ActionWidget(
+                  icon: Icons.save,
+                  onTap: () {
+                    Framework.saveAsJson(box, widget.label);
+                  },
+                ),
+                ActionWidget(
+                  icon: Icons.fullscreen,
+                  onTap: () {
+                    Guideline.toggle();
+                  },
+                ),
+                ActionWidget(
+                  icon: Icons.code,
+                  onTap: () {
+                    final code =
+                        Framework.generateCode(box, label: widget.label);
+                    CodeDialog.show(context, code);
+                  },
+                ),
+              ],
+              child: StreamBuilder<Widget>(
+                stream: viewStream,
+                initialData: CircularProgressIndicator().center(),
+                builder: (context, snapshot) => Center(child: snapshot.data),
               ),
-              ActionWidget(
-                icon: Icons.save,
-                onTap: () {
-                  Framework.saveAsJson(box, widget.label);
-                },
-              ),
-              ActionWidget(
-                icon: Icons.fullscreen,
-                onTap: () {
-                  Guideline.toggle();
-                },
-              ),
-              ActionWidget(
-                icon: Icons.code,
-                onTap: () {
-                  final code = Framework.generateCode(box, label: widget.label);
-                  CodeDialog.show(context, code);
-                },
-              ),
-            ],
-            child: StreamBuilder<Widget>(
-              stream: viewStream,
-              initialData: CircularProgressIndicator().center(),
-              builder: (context, snapshot) => Center(child: snapshot.data),
-            ),
-          ).expand(),
-          editor: Container(
-            width: 400,
-            height: context.height,
-            child: StreamBuilder<Widget>(
-              stream: editorStream,
-              initialData: CircularProgressIndicator().center(),
-              builder: (context, snapshot) => Column(
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          EditContext.of(context).back();
-                        },
-                        child: Icon(Icons.arrow_back),
-                      ),
-                      SizedBox(width: 12),
-                      Text('Properties', style: context.subtitle1),
-                      Expanded(
-                        child: SizedBox(),
-                      ),
-                      ActionWidget(
-                        icon: Icons.wrap_text,
-                        onTap: () {
-                          EditContext.of(context).wrap(context);
-                        },
-                      ),
-                      ActionWidget(
-                        icon: Icons.delete,
-                        onTap: () {
-                          EditContext.of(context).drop();
-                        },
-                      ),
-                      ActionWidget(
-                        icon: Icons.add,
-                        onTap: () {
-                          EditContext.of(context).showAddPropsDialog(context);
-                        },
-                      ),
-                    ],
-                  ).padding(all: 8),
-                  snapshot.data.padding(all: 16).expand(),
-                ],
+            ).expand(),
+            editor: Container(
+              width: 400,
+              height: context.height,
+              child: StreamBuilder<Widget>(
+                stream: Tree.of(context).editorStream,
+                initialData: CircularProgressIndicator().center(),
+                builder: (context, snapshot) => Column(
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Tree.of(context).back();
+                          },
+                          child: Icon(Icons.arrow_back),
+                        ),
+                        SizedBox(width: 12),
+                        Text('Properties', style: context.subtitle1),
+                        Expanded(
+                          child: SizedBox(),
+                        ),
+                        ActionWidget(
+                          icon: Icons.wrap_text,
+                          onTap: () {
+                            EditContext.of(context).wrap(context);
+                          },
+                        ),
+                        ActionWidget(
+                          icon: Icons.delete,
+                          onTap: () {
+                            EditContext.of(context).drop();
+                          },
+                        ),
+                        ActionWidget(
+                          icon: Icons.add,
+                          onTap: () {
+                            Tree.of(context).showAddPropsDialog(context);
+                          },
+                        ),
+                      ],
+                    ).padding(all: 8),
+                    snapshot.data.padding(all: 16).expand(),
+                  ],
+                ),
               ),
             ),
           ),

@@ -39,7 +39,7 @@ class Tree extends Node {
   }
 
   factory Tree.of(BuildContext context) =>
-      context.findAncestorWidgetOfExactType<TreeContextProvider>().tree;
+      context.findAncestorWidgetOfExactType<TreeProvider>().tree;
 
   void onEvent(NodeEvent event) {
     if (event is AddNodeEvent) {

@@ -6,11 +6,11 @@ export 'package:select/select.dart';
 export 'registry.dart';
 
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:box/box.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:file_utils/file_utils.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_box/flutter_box.dart';
 import 'package:lambda/lambda.dart';
 import 'package:fountain/fountain.dart';
@@ -43,5 +43,15 @@ class Framework {
       map['label'],
       _loadBoxFromJson(map['box']),
     ];
+  }
+
+  static debugTree(WidgetBox box) {
+    final tree = Tree.fromBox(box);
+    print(JsonEncoder.withIndent('  ').convert(tree));
+  }
+
+  static Widget buildTree(WidgetBox box) {
+    final tree = Tree.fromBox(box);
+    return TreeWidget(tree: tree);
   }
 }

@@ -216,13 +216,3 @@ class EditContext {
     _treeController.close();
   }
 }
-
-class Node {
-  final String name;
-  final int index;
-
-  Node({
-    this.name,
-    this.index,
-  });
-}

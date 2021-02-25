@@ -44,12 +44,18 @@ class _EditorScreenState extends State<EditorScreen>
             width: 240,
             height: context.height,
             child: StreamBuilder<int>(
-              builder: (context, snapshot) => TreeView(box: box),
+              builder: (context, snapshot) => Framework.buildTree(box),
               stream: treeStream,
             ),
           ),
           view: ViewContainer(
             actions: [
+              ActionWidget(
+                icon: Icons.print,
+                onTap: () {
+                  Framework.debugTree(box);
+                },
+              ),
               ActionWidget(
                 icon: Icons.save,
                 onTap: () {

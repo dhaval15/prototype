@@ -8,3 +8,4 @@ export 'src/prop/prop.dart';
 export 'src/context/context.dart';
 export 'src/engine/engine.dart';
 export 'src/widgets/widgets.dart';
+export 'src/tree/tree.dart';

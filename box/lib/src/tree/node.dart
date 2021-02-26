@@ -1,12 +1,12 @@
 import 'package:box/box.dart';
 import 'node_mixin.dart';
 
-mixin NodeNameProvider on NodeMixin<ChildBox> {
+mixin NodeNameProvider on NodeMixin<ChildBox, Node> {
   WidgetBox get box;
   String get name => box?.boxType;
 }
 
-class Node with NodeMixin<ChildBox>, NodeNameProvider {
+class Node with NodeMixin<ChildBox, Node>, NodeNameProvider {
   Node parent;
   ChildBox self;
   int index;

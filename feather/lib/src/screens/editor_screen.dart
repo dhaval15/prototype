@@ -116,13 +116,13 @@ class _EditorScreenState extends State<EditorScreen>
                         ActionWidget(
                           icon: Icons.wrap_text,
                           onTap: () {
-                            EditContext.of(context).wrap(context);
+                            Tree.of(context).wrap(context);
                           },
                         ),
                         ActionWidget(
                           icon: Icons.delete,
                           onTap: () {
-                            EditContext.of(context).drop();
+                            Tree.of(context).drop();
                           },
                         ),
                         ActionWidget(

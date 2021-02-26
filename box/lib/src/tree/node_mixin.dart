@@ -1,10 +1,10 @@
-mixin NodeMixin<T> {
-  NodeMixin<T> get parent;
-  T get self;
-  int get index;
-  List<NodeMixin<T>> get children;
+mixin NodeMixin<T, N extends NodeMixin<T, N>> {
+  N parent;
+  T self;
+  int index;
+  List<N> get children;
 
-  NodeMixin<T> find(T value) {
+  N find(T value) {
     if (self == value) return this;
     for (final child in children) {
       final found = child.find(value);
@@ -13,7 +13,7 @@ mixin NodeMixin<T> {
     return null;
   }
 
-  List<NodeMixin<T>> route(T value) {
+  List<N> route(T value) {
     final route = _route(value);
     print(route);
     if (route is List || route == null)
@@ -22,13 +22,22 @@ mixin NodeMixin<T> {
       return [route];
   }
 
-  void drop() {
-    parent.children.remove(this);
+  bool drop([void Function(N parent, T value, N child) onDrop]) {
+    if (parent != null && children.length == 1) {
+      final child = children.first;
+      child.index = index;
+      child.parent = parent;
+      children.clear();
+      remove();
+      parent.children.insert(index, child);
+      onDrop?.call(parent, self, child);
+      return true;
+    }
+    return false;
   }
 
-  void remove(T value) {
-    final node = find(value);
-    node.drop();
+  void remove() {
+    parent.children.remove(this);
   }
 
   dynamic _route(T value) {
@@ -39,9 +48,9 @@ mixin NodeMixin<T> {
         final route = child._route(value);
         if (route != null) {
           if (route is List)
-            return <NodeMixin<T>>[child, ...route];
+            return <N>[child, ...route];
           else
-            return <NodeMixin<T>>[route];
+            return <N>[route];
         }
       }
       return null;

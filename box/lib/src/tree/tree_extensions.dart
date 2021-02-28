@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:box/box.dart';
+import 'package:box/src/engine/engine.dart';
 import 'package:flutter/material.dart';
+import 'package:select/select.dart';
 
 import 'node.dart';
 
@@ -88,16 +90,21 @@ mixin ActionsProvider on CurrentMixin {
   @override
   bool drop([void Function(Node parent, ChildBox value, Node child) onDrop]) {
     return current.drop((parent, value, child) {
-      print('After Drop ${parent.name} ${child.name} ${child.box}');
-      parent.self.box = null;
-      parent.self.box = child.box;
+      final box = JsonEngine.copy(child.self.box);
+      value.value = null;
+      value.value = box;
+      child.self = value;
       move(parent);
       notify();
       onDrop?.call(parent, value, child);
     });
   }
 
-  void wrap(BuildContext context) async {}
+  void wrap(BuildContext context) async {
+    final type = await WidgetsDialog.show(context);
+    final box = ChildField.generator.widget(type);
+    final json = JsonEngine.encode(box);
+  }
 }
 
 mixin EditorNotifier on CurrentMixin {

@@ -36,6 +36,15 @@ mixin NodeMixin<T, N extends NodeMixin<T, N>> {
     return false;
   }
 
+  void insertAbove(N node, [void Function(N parent, N child) onWrap]) {
+    if (parent != null) {
+      node.parent = parent;
+      node.children.add(this..parent = node);
+      remove();
+      onWrap(node, this);
+    }
+  }
+
   void remove() {
     parent.children.remove(this);
   }
